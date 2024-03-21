@@ -1,6 +1,8 @@
 using Terraria;
 using Terraria.ModLoader;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace terraclasses
 {
@@ -17,6 +19,12 @@ namespace terraclasses
 
         bool InvalidClass = false;
         public bool IsInvalidClass => InvalidClass;
+
+        public virtual void GetClassIcon(out Texture2D Texture, out Rectangle Rect)
+        {
+            Texture = terraclasses.ClassIconsTexture.Value;
+            Rect = new Rectangle(0, 0, 48, 48);
+        }
 
         internal void Initialize()
         {

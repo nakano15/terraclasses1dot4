@@ -24,6 +24,8 @@ namespace terraclasses
 		public static Asset<Texture2D> CastBarTexture, MagicCircleTexture;
 		public static Asset<Texture2D> CerberusTexture, CerberusHeadTexture;
 		public static Asset<Texture2D> ExpBarTexture;
+		public static Asset<Texture2D> ClassIconsTexture;
+		public static Asset<Texture2D> ClassIconSlotTexture;
 		internal static ModKeybind[] SkillSlot;
 		public static bool ShowExpRewardAsPercentage = true;
 
@@ -34,6 +36,8 @@ namespace terraclasses
 			ClassContainer.AddClassContainer(this, new ClassDB());
 			if (!Main.dedServ)
 			{
+				ClassIconSlotTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/ClassIconSlot");
+				ClassIconsTexture = ModContent.Request<Texture2D>("terraclasses/Content/ClassIcons");
 				CastBarTexture = ModContent.Request<Texture2D>("terraclasses/Content/CastBar");
 				MagicCircleTexture = ModContent.Request<Texture2D>("terraclasses/Content/MagicCircle");
 				CerberusTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/cerberus");
@@ -50,6 +54,8 @@ namespace terraclasses
         public override void Unload()
         {
 			self = null;
+			ClassIconSlotTexture = null;
+			ClassIconsTexture = null;
 			CastBarTexture = null;
 			MagicCircleTexture = null;
 			ExpBarTexture = null;
@@ -58,6 +64,10 @@ namespace terraclasses
 			ClassContainer.Unload();
 			SkillContainer.Unload();
         }
-    
+
+        public override void PostSetupContent()
+        {
+			nterrautils.Interfaces.BottomButtonsInterface.AddNewTab(new Interface.ClassInfoBottomButton());
+        }
 	}
 }

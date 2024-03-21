@@ -87,7 +87,7 @@ namespace terraclasses.Skills.Cerberus
                 for (int t = drawInfo.DrawDataCache.Count - 1; t >= 0; t--)
                 {
                     DrawData dd = drawInfo.DrawDataCache[t];
-                    if (dd.texture == TextureAssets.Players[player.skinVariant, Terraria.ID.PlayerTextureID.Head].Value)
+                    if (dd.texture == TextureAssets.Players[drawInfo.skinVar, Terraria.ID.PlayerTextureID.Head].Value) //Head not being found
                     {
                         for (byte i = 0; i < 3; i++)
                         {
@@ -123,7 +123,7 @@ namespace terraclasses.Skills.Cerberus
                             }
                         }
                     }
-                    else if (player.head > 0 && dd.texture == TextureAssets.ArmorHead[player.head].Value)
+                    else if (drawInfo.cHead > 0 && dd.texture == TextureAssets.ArmorHead[drawInfo.cHead].Value)
                     {
                         drawInfo.DrawDataCache.RemoveAt(t);
                     }
@@ -131,19 +131,19 @@ namespace terraclasses.Skills.Cerberus
                     {
                         drawInfo.DrawDataCache.RemoveAt(t);
                     }
-                    else if (dd.texture == TextureAssets.Players[player.skinVariant, Terraria.ID.PlayerTextureID.Eyes].Value)
+                    else if (dd.texture == TextureAssets.Players[drawInfo.skinVar, Terraria.ID.PlayerTextureID.Eyes].Value)
                     {
                         Rectangle rect = RevampRect(new Rectangle(dd.sourceRect.Value.X + 4 * 40, dd.sourceRect.Value.Y, dd.sourceRect.Value.Width, dd.sourceRect.Value.Height));
                         DrawData ndd = new DrawData(CerberusTexture, dd.position, rect, dd.color, dd.rotation, dd.origin, dd.scale, dd.effect, 0);
                         drawInfo.DrawDataCache[t] = ndd;
                     }
-                    else if (dd.texture == TextureAssets.Players[player.skinVariant, Terraria.ID.PlayerTextureID.EyeWhites].Value)
+                    else if (dd.texture == TextureAssets.Players[drawInfo.skinVar, Terraria.ID.PlayerTextureID.EyeWhites].Value)
                     {
                         Rectangle rect = RevampRect(new Rectangle(dd.sourceRect.Value.X + 5 * 40, dd.sourceRect.Value.Y, dd.sourceRect.Value.Width, dd.sourceRect.Value.Height));
                         DrawData ndd = new DrawData(CerberusTexture, dd.position, rect, dd.color, dd.rotation, dd.origin, dd.scale, dd.effect, 0);
                         drawInfo.DrawDataCache[t] = ndd;
                     }
-                    else if (dd.texture == TextureAssets.Players[player.skinVariant, Terraria.ID.PlayerTextureID.LegSkin].Value)
+                    else if (dd.texture == TextureAssets.Players[drawInfo.skinVar, Terraria.ID.PlayerTextureID.LegSkin].Value)
                     {
                         Rectangle rect = RevampRect(new Rectangle(dd.sourceRect.Value.X, dd.sourceRect.Value.Y, dd.sourceRect.Value.Width, dd.sourceRect.Value.Height));
                         DrawData ndd = new DrawData(CerberusTexture, dd.position, rect, dd.color, dd.rotation, dd.origin, dd.scale, dd.effect, 0);
@@ -152,13 +152,13 @@ namespace terraclasses.Skills.Cerberus
                 }
             }
 
-        Rectangle RevampRect(Rectangle Original)
-        {
-            if (Original.Y == 1064)
+            Rectangle RevampRect(Rectangle Original)
             {
-                return new Rectangle(Original.X, 0, Original.Width, Original.Height);
-            }
-            return Original;
+                if (Original.Y == 1064)
+                {
+                    return new Rectangle(Original.X, 0, Original.Width, Original.Height);
+                }
+                return Original;
         }
         }
 

@@ -1,3 +1,4 @@
 displayName = Terra Classes
 author = Nakano15
 version = 0.1
+modReferences = nterrautils

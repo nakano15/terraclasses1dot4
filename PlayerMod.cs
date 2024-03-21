@@ -19,6 +19,8 @@ namespace terraclasses
         SkillSlot CombatSkillSlot = new SkillSlot();
         public const int MaxActiveSkillSlots = 4;
 
+        internal ClassData[] GetClasses => Classes;
+
         public PlayerMod()
         {
             for (int i = 0; i < MaxClasses; i++)
