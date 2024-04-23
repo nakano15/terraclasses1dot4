@@ -37,6 +37,9 @@ namespace terraclasses
             }
             return false;
         }}
+        public string Name => Base.Name;
+        public string Description => Base.Description;
+        public SkillTypes SkillType => Base.SkillType;
 
         public bool IsActive => Active;
         public bool IsUnlocked => Unlocked;
@@ -56,6 +59,7 @@ namespace terraclasses
             if (ModID == "") ModID = terraclasses.GetModName;
             this.ID = ID;
             this.ModID = ModID;
+            AttributeLevels = new int[Base.GetSkillAttributes.Length];
         }
 
         internal void ChangeCaster(Player player)
@@ -75,9 +79,10 @@ namespace terraclasses
             return Base.GetSkillAttributes[Index].Value(AttributeLevels[Index]);
         }
 
-        internal void InitializeSkillData()
+        public void ChangeAttributeLevel(int Index, int Increase)
         {
-            AttributeLevels = new int[Base.GetSkillAttributes.Length];
+            if(Index >= AttributeLevels.Length || Index < 0) return;
+            AttributeLevels[Index] += Increase;
         }
 
         internal void SetSkillInfosBasedOnUnlockInfo(SkillUnlockInfo info)
@@ -117,7 +122,8 @@ namespace terraclasses
 
         public void UpdatePassiveSkill(Player player)
         {
-            bool SetActive = CheckIfSkillUnlocked;
+            if (SkillType != SkillTypes.Passive) return;
+            bool SetActive = IsUnlocked;
             if (SetActive != Active)
             {
                 if(!Active)

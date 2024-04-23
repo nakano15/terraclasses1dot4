@@ -9,12 +9,20 @@ namespace terraclasses.Classes.Starter
         public override string Description => "";
         public override ClassTypes ClassType => ClassTypes.Starter;
         public override byte MaxLevel => 10;
-        protected override SkillUnlockInfo[] SetSkills => base.SetSkills;
+        protected override SkillUnlockInfo[] SetSkills => new SkillUnlockInfo[]
+        {
+            
+        };
 
         public override void GetClassIcon(out Texture2D Texture, out Rectangle Rect)
         {
             Texture = terraclasses.ClassIconsTexture.Value;
             Rect = new Rectangle(48 * 3, 0, 48, 48);
+        }
+
+        public override int GetMaxExp(int Level)
+        {
+            return 10 * ((Level + 1) * (Level + 1));
         }
     }
 }

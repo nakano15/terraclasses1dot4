@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace terraclasses
@@ -18,6 +19,12 @@ namespace terraclasses
         public virtual bool EffectiveAtLevel0 => false;
         bool _Invalid;
         public bool IsInvalid => _Invalid;
+
+        public virtual void GetSkillIcon(out Texture2D Texture, out Rectangle Rect)
+        {
+            Texture = terraclasses.SkillIconsTexture.Value;
+            Rect = new Rectangle(0, 0, 48, 48);
+        }
 
         internal SkillBase SetInvalid()
         {

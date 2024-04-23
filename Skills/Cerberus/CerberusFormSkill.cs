@@ -71,7 +71,7 @@ namespace terraclasses.Skills.Cerberus
 
             public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
             {
-                return PlayerMod.PlayerHasSkill(drawInfo.drawPlayer, ClassDB.Cerberus);
+                return PlayerMod.PlayerHasSkill(drawInfo.drawPlayer, SkillDB.CerberusForm);
             }
 
             public override Position GetDefaultPosition()
@@ -87,7 +87,7 @@ namespace terraclasses.Skills.Cerberus
                 for (int t = drawInfo.DrawDataCache.Count - 1; t >= 0; t--)
                 {
                     DrawData dd = drawInfo.DrawDataCache[t];
-                    if (dd.texture == TextureAssets.Players[drawInfo.skinVar, Terraria.ID.PlayerTextureID.Head].Value) //Head not being found
+                    if (dd.texture == TextureAssets.Players[0, 0].Value) //Head not being found
                     {
                         for (byte i = 0; i < 3; i++)
                         {
@@ -146,7 +146,7 @@ namespace terraclasses.Skills.Cerberus
                     else if (dd.texture == TextureAssets.Players[drawInfo.skinVar, Terraria.ID.PlayerTextureID.LegSkin].Value)
                     {
                         Rectangle rect = RevampRect(new Rectangle(dd.sourceRect.Value.X, dd.sourceRect.Value.Y, dd.sourceRect.Value.Width, dd.sourceRect.Value.Height));
-                        DrawData ndd = new DrawData(CerberusTexture, dd.position, rect, dd.color, dd.rotation, dd.origin, dd.scale, dd.effect, 0);
+                        DrawData ndd = new DrawData(CerberusTexture, dd.position, rect, drawInfo.colorBodySkin, dd.rotation, dd.origin, dd.scale, dd.effect, 0);
                         drawInfo.DrawDataCache.Insert(t, ndd);
                     }
                 }

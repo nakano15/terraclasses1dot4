@@ -32,6 +32,11 @@ namespace terraclasses
         public bool IsUnlocked => Unlocked;
         public int GetSkillPoints => SkillPoint;
 
+        public void ChangeSkillPoints(int Change)
+        {
+            SkillPoint = (int)System.MathF.Max(0, SkillPoint + Change);
+        }
+
         public void ChangeClass(uint ID, string ModID = "")
         {
             if(ModID == "")
@@ -53,7 +58,6 @@ namespace terraclasses
             {
                 Skills[i] = SkillContainer.GetSkill(skills[i].GetID, skills[i].GetModID).GetSkillData;
                 Skills[i].ChangeSkillIDs(skills[i].GetID, skills[i].GetModID);
-                Skills[i].InitializeSkillData();
                 Skills[i].SetSkillInfosBasedOnUnlockInfo(skills[i]);
             }
             Unlocked = true;
@@ -117,6 +121,7 @@ namespace terraclasses
                 Exp -= MaxExp;
                 Level++;
                 LeveledUp = true;
+                SkillPoint++;
                 UpdateMaxExp();
             }
             return LeveledUp;
@@ -124,7 +129,25 @@ namespace terraclasses
 
         public void UpdateMaxExp()
         {
-            MaxExp = 100 * ((Level + 1) * (Level + 1));
+            MaxExp = Base.GetMaxExp(Level);
+        }
+
+        public string GetLevelString(bool MaxLevelToo = false)
+        {
+            if (Level < MaxLevel)
+            {
+                return "Level [" + GetLevel + (MaxLevelToo ? "/" + MaxLevel : "") + "]";
+            }
+            return "[Mastered]";
+        }
+
+        public string GetExpString()
+        {
+            if (Level < MaxLevel)
+            {
+                return "Exp ["+GetExp+"/" + GetMaxExp +"]";
+            }
+            return "Exp ["+GetMaxExp+"]";
         }
     }
 }

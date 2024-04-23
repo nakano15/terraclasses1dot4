@@ -26,6 +26,11 @@ namespace terraclasses
             Rect = new Rectangle(0, 0, 48, 48);
         }
 
+        public virtual int GetMaxExp(int Level)
+        {
+            return 100 * ((Level + 1) * (Level + 1));
+        }
+
         internal void Initialize()
         {
             _Skills.AddRange(SetSkills);

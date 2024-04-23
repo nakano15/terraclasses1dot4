@@ -4,3 +4,32 @@ Keybinds: {
 	"Skill Slot 2.DisplayName": Skill Slot 2
 	"Skill Slot 1.DisplayName": Skill Slot 1
 }
+
+Configs: {
+	ConfigMod: {
+		DisplayName: Config Mod
+
+		ItemTypesList: {
+			Label: Item Types List
+			Tooltip: ""
+		}
+	}
+
+	ItemTypes: {
+		Tooltip: ""
+		None.Label: None
+		Sword.Label: Sword
+		Spear.Label: Spear
+		Axe.Label: Axe
+		Pickaxe.Label: Pickaxe
+		Hammer.Label: Hammer
+		Bow.Label: Bow
+		Throwable.Label: Throwable
+		Rifle.Label: Rifle
+		Pistol.Label: Pistol
+		DartGun.Label: Dart Gun
+		MagicRod.Label: Magic Rod
+		Book.Label: Book
+		Dagger.Label: Dagger
+	}
+}

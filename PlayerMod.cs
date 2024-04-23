@@ -67,6 +67,7 @@ namespace terraclasses
                     }
                 }
             }
+            Classes[1].ChangeClass(ClassDB.Fighter);
         }
 
         internal static void AddSkillToActiveSkills(Player player, SkillData sd)

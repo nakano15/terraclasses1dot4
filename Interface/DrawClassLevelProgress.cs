@@ -33,12 +33,21 @@ namespace terraclasses.Interface
             Vector2 DrawPosition = new Vector2(Main.screenWidth, Main.screenHeight - 40);
             if (Main.playerInventory)
                 DrawPosition.X -= 228;
-            string ClassName = LastClass.Name;
             bool Maxed = LastClass.IsMastered;
-            if (Maxed)
-                ClassName += " Master";
+            bool IsMouseOverExpBar = !Maxed && Main.mouseX >= DrawPosition.X && Main.mouseX < DrawPosition.X + 228 && 
+                Main.mouseY >= DrawPosition.Y + 18 && Main.mouseY < DrawPosition.Y + 36;
+            string ClassName = LastClass.Name;
+            if (IsMouseOverExpBar)
+            {
+                ClassName = LastClass.GetExpString();
+            }
             else
-                ClassName += " Lv " + LastClass.GetLevel;
+            {
+                if (Maxed)
+                    ClassName += " Master";
+                else
+                    ClassName += " Lv " + LastClass.GetLevel;
+            }
             Utils.DrawBorderString(Main.spriteBatch, ClassName, DrawPosition - Vector2.UnitX * 16, (Maxed ? Color.Yellow : Color.White), anchorx: 1);
             DrawPosition.Y += 18;
             bool MouseOver = false;

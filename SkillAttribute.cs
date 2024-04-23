@@ -5,6 +5,7 @@ namespace terraclasses
 {
     public class SkillAttribute
     {
+        public virtual string Name => "Unnamed";
         public virtual string AttributeDescription(int Level)
         {
             return "Does something.";
