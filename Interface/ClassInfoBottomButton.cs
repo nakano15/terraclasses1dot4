@@ -115,8 +115,7 @@ namespace terraclasses.Interface
             for (int i = 0; i < 5; i++)
             {
                 StartPosition.X = (int)StartPosition.X;
-                bool MouseOver = Main.mouseX >= StartPosition.X + 4 && Main.mouseX < StartPosition.X + 52 && 
-                    Main.mouseY >= StartPosition.Y + 4 && Main.mouseY < StartPosition.Y + 52;
+                bool MouseOver = CommonInterfaceMethods.IsMouseOverIcon(StartPosition);
                 bool DrawCanUnlock = false;
                 if (CanUnlockNextClass && !Classes[i].IsUnlocked)
                 {
@@ -177,8 +176,7 @@ namespace terraclasses.Interface
             InfoPosition.X += 4;
             InfoPosition.Y += 4;
             DrawClassSlotIcon(InfoPosition, Class, false);
-            if (Main.mouseX >= InfoPosition.X + 4 && Main.mouseX < InfoPosition.X + 52 && 
-                Main.mouseY >= InfoPosition.Y + 4 && Main.mouseY < InfoPosition.Y + 52)
+            if (CommonInterfaceMethods.IsMouseOverIcon(InfoPosition))
             {
                 MouseText = "\"" + Class.Base.Description + "\"";
             }
@@ -201,8 +199,7 @@ namespace terraclasses.Interface
                 int Index = i + SubWindowScroll * SkillsPerPage;
                 SkillData skill = Index < Class.GetSkills.Length ? Class.GetSkills[Index] : null;
                 DrawSkillIcon(InfoPosition, skill);
-                if (skill != null && Main.mouseX >= InfoPosition.X + 4 && Main.mouseX < InfoPosition.X + 52 && 
-                    Main.mouseY >= InfoPosition.Y + 4 && Main.mouseY < InfoPosition.Y + 52)
+                if (skill != null && CommonInterfaceMethods.IsMouseOverIcon(InfoPosition))
                 {
                     MouseText = skill.Base.Name + "\nClick for Information.";
                     if (Main.mouseLeft && Main.mouseLeftRelease)
@@ -282,54 +279,12 @@ namespace terraclasses.Interface
 
         void DrawClassSlotIcon(Vector2 Position, ClassData Class, bool CanUnlockNextClass)
         {
-            Texture2D ClassSlotTexture = terraclasses.ClassIconSlotTexture.Value;
-            Main.spriteBatch.Draw(ClassSlotTexture, Position, new Rectangle(Class.IsMastered ? 56 : 0, 0, 56, 56), Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
-            if (Class.IsUnlocked)
-            {
-                Texture2D ClassIcon;
-                Rectangle ClassRect;
-                Class.Base.GetClassIcon(out ClassIcon, out ClassRect);
-                float Scale = ClassRect.Width;
-                if (Scale < ClassRect.Height)
-                {
-                    Scale = ClassRect.Height;
-                }
-                Scale = 48f / Scale;
-                Position.X += 4;
-                Position.Y += 4;
-                Main.spriteBatch.Draw(ClassIcon, Position, ClassRect, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
-            }
-            else
-            {
-                Texture2D Icon = terraclasses.ClassIconsTexture.Value;
-                Rectangle LockRect = new Rectangle(48, 0, 48, 48);
-                if (CanUnlockNextClass)
-                {
-                    LockRect.X *= 2;
-                }
-                float Scale = 1f;
-                Position.X += 4;
-                Position.Y += 4;
-                Main.spriteBatch.Draw(Icon, Position, LockRect, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
-            }
+            CommonInterfaceMethods.DrawClassSlotIcon(Position, Class, CanUnlockNextClass);
         }
 
         void DrawSkillIcon(Vector2 Position, SkillData Skill)
         {
-            Texture2D ClassSlotTexture = terraclasses.ClassIconSlotTexture.Value;
-            Main.spriteBatch.Draw(ClassSlotTexture, Position, new Rectangle(0, 0, 56, 56), Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
-            if (Skill == null) return;
-            Color color = Skill.IsUnlocked ? Color.White : Color.Gray;
-            Position.X += 4;
-            Position.Y += 4;
-            Skill.Base.GetSkillIcon(out Texture2D Icon, out Rectangle rect);
-            float Scale = rect.Width;
-            if (rect.Height > Scale)
-            {
-                Scale = rect.Height;
-            }
-            Scale = 48f / Scale;
-            Main.spriteBatch.Draw(Icon, Position, rect, color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            CommonInterfaceMethods.DrawSkillIcon(Position, Skill);
         }
     }
 }

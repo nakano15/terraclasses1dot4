@@ -19,10 +19,5 @@ namespace terraclasses.Classes.Starter
             Texture = terraclasses.ClassIconsTexture.Value;
             Rect = new Rectangle(48 * 3, 0, 48, 48);
         }
-
-        public override int GetMaxExp(int Level)
-        {
-            return 10 * ((Level + 1) * (Level + 1));
-        }
     }
 }

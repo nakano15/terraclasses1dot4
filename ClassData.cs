@@ -18,6 +18,7 @@ namespace terraclasses
         public string Name => Base.Name;
         public int MaxLevel => Base.MaxLevel;
         public bool IsMastered => Level >= MaxLevel;
+        public bool IsClassChangeLevel => Level >= Base.ClassChangeLevel;
         uint ID = 0;
         string ModID = "";
         byte Level = 0;

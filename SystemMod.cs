@@ -10,17 +10,20 @@ namespace terraclasses
     {
         DrawSkillEffectOnScreen DrawSkillEffectOnScreenDefinition;
         DrawClassLevelProgress DrawClassLevelProgressDefinition;
+        ClassInfosInterface ClassInfosInterfaceDefinition;
 
         public override void Load()
         {
             DrawSkillEffectOnScreenDefinition = new DrawSkillEffectOnScreen();
             DrawClassLevelProgressDefinition = new DrawClassLevelProgress();
+            ClassInfosInterfaceDefinition = new ClassInfosInterface();
         }
 
         public override void Unload()
         {
             DrawSkillEffectOnScreenDefinition = null;
             DrawClassLevelProgressDefinition = null;
+            ClassInfosInterfaceDefinition = null;
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -36,6 +39,7 @@ namespace terraclasses
                 }
             }
             layers.Insert(InventoryPosition, DrawClassLevelProgressDefinition);
+            layers.Insert(InventoryPosition, ClassInfosInterfaceDefinition);
             layers.Insert(0, DrawSkillEffectOnScreenDefinition);
         }
     }

@@ -12,6 +12,13 @@ namespace terraclasses
         public virtual string Description => "";
         public virtual ClassTypes ClassType => ClassTypes.Normal;
         public virtual byte MaxLevel => 50;
+        public virtual byte ClassChangeLevel
+        {
+            get
+            {
+                return (byte)System.MathF.Min(System.MathF.Max(10, MaxLevel - 10), MaxLevel);
+            }
+        }
         protected virtual SkillUnlockInfo[] SetSkills => new SkillUnlockInfo[0];
         public List<SkillUnlockInfo> GetSkills => _Skills; //Should let people also alter skills class has, which is good.
         List<SkillUnlockInfo> _Skills = new List<SkillUnlockInfo>();
@@ -28,7 +35,7 @@ namespace terraclasses
 
         public virtual int GetMaxExp(int Level)
         {
-            return 100 * ((Level + 1) * (Level + 1));
+            return GetDefaultMaxExp((byte)ClassType, Level);
         }
 
         internal void Initialize()
@@ -40,6 +47,35 @@ namespace terraclasses
         {
             InvalidClass = true;
             return this;
+        }
+
+        public int GetDefaultMaxExp(byte ClassGrade, int Level)
+        {
+            switch (ClassGrade)
+            {
+                default:
+                    return 100 * ((Level + 1) * (Level + 1));
+                case 0:
+                    {
+                        const int a = 5, b = 3, c = 10;
+                        return a * Level + b * (Level * Level) + c;
+                    }
+                case 1:
+                    {
+                        const int a = 12, b = 8, c = 30;
+                        return a * Level + b * (Level * Level) + c;
+                    }
+                case 2:
+                    {
+                        const int a = 21, b = 15, c = 50;
+                        return a * Level + b * (Level * Level) + c;
+                    }
+                case 3:
+                    {
+                        const int a = 28, b = 22, c = 100;
+                        return a * Level + b * (Level * Level) + c;
+                    }
+            }
         }
     }
 }
