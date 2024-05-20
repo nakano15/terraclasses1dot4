@@ -38,9 +38,12 @@ namespace terraclasses
                         break;
                 }
             }
-            layers.Insert(InventoryPosition, DrawClassLevelProgressDefinition);
-            layers.Insert(InventoryPosition, ClassInfosInterfaceDefinition);
-            layers.Insert(0, DrawSkillEffectOnScreenDefinition);
+            if (InventoryPosition > -1)
+            {
+                layers.Insert(InventoryPosition, DrawSkillEffectOnScreenDefinition);
+                layers.Insert(InventoryPosition, DrawClassLevelProgressDefinition);
+                layers.Insert(InventoryPosition, ClassInfosInterfaceDefinition);
+            }
         }
     }
 }

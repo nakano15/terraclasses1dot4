@@ -104,6 +104,18 @@ namespace terraclasses
             return false;
         }
 
+        public bool SpendSkillPointOnSkillAttribute(int SkillIndex, int AttributeIndex)
+        {
+            if (SkillPoint <= 0 || SkillIndex < 0 || SkillIndex >= Skills.Length) return false;
+            SkillData skill = Skills[SkillIndex];
+            if (AttributeIndex < 0 || AttributeIndex >= skill.Base.GetSkillAttributes.Length) return false;
+            int PointsToUse = skill.Base.GetSkillAttributes[AttributeIndex].PointsUsed;
+            if (SkillPoint < PointsToUse) return false;
+            skill.ChangeAttributeLevel(AttributeIndex, 1);
+            ChangeSkillPoints(-PointsToUse);
+            return true;
+        }
+
         public SkillData GetSkillOrNull(uint ID, string ModID = "")
         {
             foreach (SkillData sd in Skills)

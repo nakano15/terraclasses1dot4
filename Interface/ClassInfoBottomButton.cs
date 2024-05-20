@@ -75,14 +75,14 @@ namespace terraclasses.Interface
                     }
                 }
                 {
-                    Vector2 ReturnButtonPosition = new Vector2(StartPosition.X + InternalWidth * .5f, StartPosition.Y + InternalHeight - 20);
+                    Vector2 ReturnButtonPosition = new Vector2(StartPosition.X + (int)(InternalWidth * .75f), StartPosition.Y + InternalHeight - 20);
                     const string CloseText = "Return";
                     Vector2 CloseButtonDim = FontAssets.MouseText.Value.MeasureString(CloseText);
                     ReturnButtonPosition.X -= CloseButtonDim.X * .5f;
                     ReturnButtonPosition.Y -= CloseButtonDim.Y;
                     Color c = Color.White;
                     if (Main.mouseX >= ReturnButtonPosition.X && Main.mouseX < ReturnButtonPosition.X + CloseButtonDim.X && 
-                        Main.mouseY >= ReturnButtonPosition.Y && Main.mouseX < ReturnButtonPosition.Y + CloseButtonDim.Y)
+                        Main.mouseY >= ReturnButtonPosition.Y && Main.mouseY < ReturnButtonPosition.Y + CloseButtonDim.Y)
                     {
                         c = Color.Red;
                         if (Main.mouseLeft && Main.mouseLeftRelease)
@@ -96,6 +96,24 @@ namespace terraclasses.Interface
                     }
                     Utils.DrawBorderString(Main.spriteBatch, CloseText, ReturnButtonPosition, c);
                 }
+                {
+                    Vector2 ReturnButtonPosition = new Vector2(StartPosition.X + (int)(InternalWidth * .25f), StartPosition.Y + InternalHeight - 20);
+                    const string CloseText = "Manage";
+                    Vector2 CloseButtonDim = FontAssets.MouseText.Value.MeasureString(CloseText);
+                    ReturnButtonPosition.X -= CloseButtonDim.X * .5f;
+                    ReturnButtonPosition.Y -= CloseButtonDim.Y;
+                    Color c = Color.White;
+                    if (Main.mouseX >= ReturnButtonPosition.X && Main.mouseX < ReturnButtonPosition.X + CloseButtonDim.X && 
+                        Main.mouseY >= ReturnButtonPosition.Y && Main.mouseY < ReturnButtonPosition.Y + CloseButtonDim.Y)
+                    {
+                        c = Color.Red;
+                        if (Main.mouseLeft && Main.mouseLeftRelease)
+                        {
+                            ClassInfosInterface.Open(SelectedClass, SelectedSkill);
+                        }
+                    }
+                    Utils.DrawBorderString(Main.spriteBatch, CloseText, ReturnButtonPosition, c);
+                }
             }
             else
             {
@@ -103,8 +121,7 @@ namespace terraclasses.Interface
             }
             if (MouseText != "")
             {
-                Vector2 Position = new Vector2(Main.mouseX + 16, Main.mouseY + 16);
-                Utils.DrawBorderString(Main.spriteBatch, MouseText, Position, Color.White);
+                MouseOverInterface.ChangeMouseText(MouseText);
             }
         }
 
@@ -191,7 +208,7 @@ namespace terraclasses.Interface
             InterfaceHelper.DrawBackgroundPanel(InfoPosition, InternalWidth - 8, 68, PanelsColor);
             InfoPosition.Y += 4;
             //Skills List
-            const int SkillsPerPage = 7;
+            const int SkillsPerPage = 8;
             const int SkillSlotDimension = 60;
             InfoPosition.X = StartPosition.X + (InternalWidth - SkillSlotDimension * SkillsPerPage) * .5f;
             for (int i = 0; i < SkillsPerPage; i++)
@@ -253,11 +270,7 @@ namespace terraclasses.Interface
                         MouseText = "Uses " + att[i].PointsUsed + " Skill Points to Level Up.";
                         if (Main.mouseLeft && Main.mouseLeftRelease)
                         {
-                            int PointsSpent = att[i].PointsUsed;
-                            Skill.ChangeAttributeLevel(i, PointsSpent);
-                            Skill.UpdateSkillUnlockedState();
-                            Skill.UpdatePassiveSkill(MainMod.GetPlayerCharacter());
-                            Class.ChangeSkillPoints(-PointsSpent);
+                            Class.SpendSkillPointOnSkillAttribute(SelectedSkill, i);
                         }
                     }
                     Utils.DrawBorderString(Main.spriteBatch, IncreaseText, InfoPosition, Color.Green, 0.8f);
