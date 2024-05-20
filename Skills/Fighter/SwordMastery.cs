@@ -41,7 +41,7 @@ namespace terraclasses.Skills.Fighter
         public class IncreaseAttackSpeed : SkillAttribute
         {
             public override string Name => "Attack Speed";
-            public override int MaxLevel => 10;
+            public override int MaxLevel => 6;
             public override int PointsUsed => 1;
             
             public override string AttributeDescription(int Level)
@@ -51,7 +51,7 @@ namespace terraclasses.Skills.Fighter
             }
             public override float Value(int Level)
             {
-                return Level * .01f;
+                return Level * .02f; //12
             }
         }
 
@@ -64,11 +64,11 @@ namespace terraclasses.Skills.Fighter
                 return "Increases Melee Damage by " + ((int)Percentage) + "%";
             }
             public override int PointsUsed => 1;
-            public override int MaxLevel => 10;
+            public override int MaxLevel => 7;
 
             public override float Value(int Level)
             {
-                return Level * .015f;
+                return Level * .03f;
             }
         }
 
@@ -85,7 +85,7 @@ namespace terraclasses.Skills.Fighter
 
             public override float Value(int Level)
             {
-                return (int)(Level * 1.4f);
+                return (int)(Level * 2.4f);
             }
         }
     }

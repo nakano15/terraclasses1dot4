@@ -120,9 +120,8 @@ namespace terraclasses
             Active = false;
         }
 
-        public void UpdatePassiveSkill(Player player)
+        internal void UpdatePassiveSkill(Player player)
         {
-            if (SkillType != SkillTypes.Passive) return;
             bool SetActive = IsUnlocked;
             if (SetActive != Active)
             {

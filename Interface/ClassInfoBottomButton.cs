@@ -96,28 +96,28 @@ namespace terraclasses.Interface
                     }
                     Utils.DrawBorderString(Main.spriteBatch, CloseText, ReturnButtonPosition, c);
                 }
-                {
-                    Vector2 ReturnButtonPosition = new Vector2(StartPosition.X + (int)(InternalWidth * .25f), StartPosition.Y + InternalHeight - 20);
-                    const string CloseText = "Manage";
-                    Vector2 CloseButtonDim = FontAssets.MouseText.Value.MeasureString(CloseText);
-                    ReturnButtonPosition.X -= CloseButtonDim.X * .5f;
-                    ReturnButtonPosition.Y -= CloseButtonDim.Y;
-                    Color c = Color.White;
-                    if (Main.mouseX >= ReturnButtonPosition.X && Main.mouseX < ReturnButtonPosition.X + CloseButtonDim.X && 
-                        Main.mouseY >= ReturnButtonPosition.Y && Main.mouseY < ReturnButtonPosition.Y + CloseButtonDim.Y)
-                    {
-                        c = Color.Red;
-                        if (Main.mouseLeft && Main.mouseLeftRelease)
-                        {
-                            ClassInfosInterface.Open(SelectedClass, SelectedSkill);
-                        }
-                    }
-                    Utils.DrawBorderString(Main.spriteBatch, CloseText, ReturnButtonPosition, c);
-                }
             }
             else
             {
                 DrawPlayerClassList(StartPosition, CanUnlockNextClass, Classes, ref MouseText);
+            }
+            {
+                Vector2 ReturnButtonPosition = new Vector2(StartPosition.X + (int)(InternalWidth * .25f), StartPosition.Y + InternalHeight - 20);
+                const string CloseText = "Manage";
+                Vector2 CloseButtonDim = FontAssets.MouseText.Value.MeasureString(CloseText);
+                ReturnButtonPosition.X -= CloseButtonDim.X * .5f;
+                ReturnButtonPosition.Y -= CloseButtonDim.Y;
+                Color c = Color.White;
+                if (Main.mouseX >= ReturnButtonPosition.X && Main.mouseX < ReturnButtonPosition.X + CloseButtonDim.X && 
+                    Main.mouseY >= ReturnButtonPosition.Y && Main.mouseY < ReturnButtonPosition.Y + CloseButtonDim.Y)
+                {
+                    c = Color.Red;
+                    if (Main.mouseLeft && Main.mouseLeftRelease)
+                    {
+                        ClassInfosInterface.Open(SelectedClass, SelectedSkill);
+                    }
+                }
+                Utils.DrawBorderString(Main.spriteBatch, CloseText, ReturnButtonPosition, c);
             }
             if (MouseText != "")
             {

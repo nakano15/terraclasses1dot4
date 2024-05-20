@@ -84,13 +84,18 @@ namespace terraclasses
             //Update what?
         }
 
-        internal void TakeActiveSkills(List<SkillData> Skills)
+        internal void TakeActiveSkills(List<SkillData> Skills, Player player)
         {
             foreach (SkillData sd in this.Skills)
             {
-                if (sd.IsUnlocked && sd.IsActive)
+                if (sd.IsUnlocked)
                 {
-                    Skills.Add(sd);
+                    if (sd.SkillType == SkillTypes.Passive)
+                    {
+                        sd.UpdatePassiveSkill(player);
+                    }
+                    if (sd.IsActive)
+                        Skills.Add(sd);
                 }
             }
         }
@@ -112,6 +117,7 @@ namespace terraclasses
             int PointsToUse = skill.Base.GetSkillAttributes[AttributeIndex].PointsUsed;
             if (SkillPoint < PointsToUse) return false;
             skill.ChangeAttributeLevel(AttributeIndex, 1);
+            skill.UpdateSkillUnlockedState();
             ChangeSkillPoints(-PointsToUse);
             return true;
         }

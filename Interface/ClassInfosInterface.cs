@@ -295,15 +295,19 @@ namespace terraclasses.Interface
                             Main.mouseY >= AttributePosition.Y && Main.mouseY < AttributePosition.Y + Dimension.Y)
                         {
                             MouseText = AttributeBase.Name + "\n\"" + AttributeBase.AttributeDescription(AttributeLevel) + "\"";
+                            if (AttributeLevel < AttributeBase.MaxLevel)
+                            {
+                                MouseText += "\n\"Next: "+AttributeBase.AttributeDescription(AttributeLevel + 1)+"\"";
+                            }
                         }
-                        if (HasSkillPoint)
+                        if (HasSkillPoint && AttributeLevel < AttributeBase.MaxLevel)
                         {
                             AttributePosition.X += Dimension.X + 4;
-                            AttributePosition.Y += Dimension.X + 3;
+                            AttributePosition.Y += 3;
                             if (Main.mouseX >= AttributePosition.X && Main.mouseX < AttributePosition.X + 16 && 
                                 Main.mouseY >= AttributePosition.Y && Main.mouseY < AttributePosition.Y + 16)
                             {
-                                MouseText = "Spend Skill Point on this Attribute?";
+                                MouseText = "Spend Skill Point on this Attribute?\nUses " + AttributeBase.PointsUsed + " Skill Points.";
                                 if (Main.mouseLeft && Main.mouseLeftRelease)
                                 {
                                     Class.SpendSkillPointOnSkillAttribute(SelectedSkill, Index);

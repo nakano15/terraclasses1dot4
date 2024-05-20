@@ -50,7 +50,7 @@ namespace terraclasses
             foreach (ClassData cd in Classes)
             {
                 if (cd.IsUnlocked)
-                    cd.TakeActiveSkills(ActiveSkills);
+                    cd.TakeActiveSkills(ActiveSkills, Player);
             }
         }
 
@@ -61,10 +61,6 @@ namespace terraclasses
                 foreach(SkillData sd in cd.GetSkills)
                 {
                     sd.UpdateSkillUnlockedState();
-                    if (sd.Base.SkillType == SkillTypes.Passive)
-                    {
-                        sd.UpdatePassiveSkill(Player);
-                    }
                 }
             }
             Classes[1].ChangeClass(ClassDB.Fighter);
