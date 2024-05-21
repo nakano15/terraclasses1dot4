@@ -54,22 +54,68 @@ namespace terraclasses.Interface
             }
         }
 
-        public static void DrawSkillIcon(Vector2 Position, SkillData Skill)
+        public static void DrawSkillIcon(Vector2 Position, SkillData Skill, string QuickSlotKey = "")
         {
             Texture2D ClassSlotTexture = terraclasses.ClassIconSlotTexture.Value;
             Main.spriteBatch.Draw(ClassSlotTexture, Position, new Rectangle(0, 0, 56, 56), Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
-            if (Skill == null) return;
-            Color color = Skill.IsUnlocked ? Color.White : Color.Gray;
+            if (Skill != null)
+            {
+                Color color = Skill.IsUnlocked ? Color.White : Color.Gray;
+                Position.X += 4;
+                Position.Y += 4;
+                Skill.Base.GetSkillIcon(out Texture2D Icon, out Rectangle rect);
+                float Scale = rect.Width;
+                if (rect.Height > Scale)
+                {
+                    Scale = rect.Height;
+                }
+                Scale = 48f / Scale;
+                Main.spriteBatch.Draw(Icon, Position, rect, color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            }
+            if (QuickSlotKey != "")
+            {
+                Utils.DrawBorderString(Main.spriteBatch, QuickSlotKey, Position, Color.White, .7f);
+            }
+        }
+
+        public static void DrawSkillQuickslotIcon(Vector2 Position, SkillData Skill, int SlotIndex, string QuickSlotKey = "")
+        {
+            Texture2D ClassSlotTexture = terraclasses.SkillQuickslotTexture.Value;
+            Color color;
+            switch (SlotIndex)
+            {
+                default:
+                    color = Color.White;
+                    break;
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    color = Color.Green;
+                    break;
+                case 4:
+                    color = Color.Red;
+                    break;
+            }
+            Main.spriteBatch.Draw(ClassSlotTexture, Position, null, color, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
             Position.X += 4;
             Position.Y += 4;
-            Skill.Base.GetSkillIcon(out Texture2D Icon, out Rectangle rect);
-            float Scale = rect.Width;
-            if (rect.Height > Scale)
+            if (Skill != null)
             {
-                Scale = rect.Height;
+                color = Skill.IsUnlocked ? Color.White : Color.Gray;
+                Skill.Base.GetSkillIcon(out Texture2D Icon, out Rectangle rect);
+                float Scale = rect.Width;
+                if (rect.Height > Scale)
+                {
+                    Scale = rect.Height;
+                }
+                Scale = 32f / Scale;
+                Main.spriteBatch.Draw(Icon, Position, rect, color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
             }
-            Scale = 48f / Scale;
-            Main.spriteBatch.Draw(Icon, Position, rect, color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            if (QuickSlotKey != "")
+            {
+                Utils.DrawBorderString(Main.spriteBatch, QuickSlotKey, Position, Color.White, .7f);
+            }
         }
     }
 }

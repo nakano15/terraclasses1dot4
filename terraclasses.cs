@@ -26,7 +26,7 @@ namespace terraclasses
 		public static Asset<Texture2D> ExpBarTexture, SkillUpButtonTexture;
 		public static Asset<Texture2D> ClassIconsTexture;
 		public static Asset<Texture2D> SkillIconsTexture;
-		public static Asset<Texture2D> ClassIconSlotTexture;
+		public static Asset<Texture2D> ClassIconSlotTexture, SkillQuickslotTexture;
 		internal static ModKeybind[] SkillSlot;
 		public static bool ShowExpRewardAsPercentage = true;
 
@@ -38,6 +38,7 @@ namespace terraclasses
 			if (!Main.dedServ)
 			{
 				ClassIconSlotTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/ClassIconSlot");
+				SkillQuickslotTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/SkillQuickSlot");
 				ClassIconsTexture = ModContent.Request<Texture2D>("terraclasses/Content/ClassIcons");
 				SkillIconsTexture = ModContent.Request<Texture2D>("terraclasses/Content/SkillIcons");
 				CastBarTexture = ModContent.Request<Texture2D>("terraclasses/Content/CastBar");

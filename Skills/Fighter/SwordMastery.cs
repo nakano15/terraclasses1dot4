@@ -30,7 +30,7 @@ namespace terraclasses.Skills.Fighter
         {
             Player p = Data.GetCaster;
             ItemTypes Type = ItemMod.GetItemType(p.HeldItem);
-            //if (Type == ItemTypes.Sword || Type == ItemTypes.Dagger)
+            if (Type == ItemTypes.Sword || Type == ItemTypes.Dagger)
             {
                 p.GetDamage<MeleeDamageClass>() += Data.GetSkillAttributeValue(0);
                 p.GetAttackSpeed<MeleeDamageClass>() += Data.GetSkillAttributeValue(1);
@@ -85,7 +85,7 @@ namespace terraclasses.Skills.Fighter
 
             public override float Value(int Level)
             {
-                return (int)(Level * 2.4f);
+                return (int)(Level * 1.2f);
             }
         }
     }

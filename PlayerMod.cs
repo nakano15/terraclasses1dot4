@@ -98,6 +98,17 @@ namespace terraclasses
             }
         }
 
+        public SkillData GetSkillFromSlot(int Index)
+        {
+            if (Index >= 0 && Index < 5)
+            {
+                if (Index == 4)
+                    return GetSkillFromSlot(CombatSkillSlot);
+                return GetSkillFromSlot(ActiveSkillSlots[Index]);
+            }
+            return null;
+        }
+
         public SkillData GetSkillFromSlot(SkillSlot slot)
         {
             if (slot.Slot > -1 && slot.ClassIndex > -1 && slot.ClassIndex < Classes.Length && Classes[slot.ClassIndex].IsUnlocked)

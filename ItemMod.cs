@@ -19,13 +19,21 @@ namespace terraclasses
 
         public override void SetDefaults(Item entity)
         {
-            if (entity.netID < Main.maxItems)
+            if (entity.damage > 0 && entity.netID < Main.maxItems)
             {
-                ItemDefinition def = new ItemDefinition(entity.netID);
+                foreach (ItemDefinition def in ListItemTypes.Keys)
+                {
+                    if (def.Type == entity.type)
+                    {
+                        _ItemType = ListItemTypes[def];
+                        break;
+                    }
+                }
+                /*ItemDefinition def = new ItemDefinition(entity.netID);
                 if (ListItemTypes.ContainsKey(def))
                 {
                     _ItemType = ListItemTypes[def];
-                }
+                }*/
             }
         }
 

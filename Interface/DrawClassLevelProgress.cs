@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria.ModLoader;
 using ReLogic.Graphics;
+using nterrautils;
 
 namespace terraclasses.Interface
 {
@@ -23,7 +24,8 @@ namespace terraclasses.Interface
         
         new protected static bool DrawSelf()
         {
-            ClassData LastClass = Main.player[Main.myPlayer].GetModPlayer<PlayerMod>().GetLastClass;
+            PlayerMod pm = MainMod.GetPlayerCharacter().GetModPlayer<PlayerMod>();
+            ClassData LastClass = pm.GetLastClass;
             if (LastExp != LastClass.GetExp || LastMaxExp != LastClass.GetMaxExp)
             {
                 LastExp = LastClass.GetExp;
@@ -33,6 +35,7 @@ namespace terraclasses.Interface
             Vector2 DrawPosition = new Vector2(Main.screenWidth, Main.screenHeight - 40);
             if (Main.playerInventory)
                 DrawPosition.X -= 228;
+            DrawSkillSlots(DrawPosition, pm);
             bool Maxed = LastClass.IsMastered;
             bool IsMouseOverExpBar = !Maxed && Main.mouseX >= DrawPosition.X && Main.mouseX < DrawPosition.X + 228 && 
                 Main.mouseY >= DrawPosition.Y + 18 && Main.mouseY < DrawPosition.Y + 36;
@@ -64,6 +67,29 @@ namespace terraclasses.Interface
                 Main.spriteBatch.Draw(terraclasses.ExpBarTexture.Value, DrawPosition, new Rectangle(2 + (144 - BarFill), 14, BarFill, 8), Color.Green);
             }
             return true;
+        }
+
+        static void DrawSkillSlots(Vector2 Position, PlayerMod pm)
+        {
+            const float SlotDistance = 44f;
+            Position.X -= 5f * SlotDistance;
+            Position.Y -= SlotDistance;
+            for (int i = 0; i < 5; i++)
+            {
+                SkillData sd = pm.GetSkillFromSlot(i);
+                string Text = "";
+                if (i < 4)
+                {
+                    foreach (string t in terraclasses.SkillSlot[i].GetAssignedKeys())
+                    {
+                        if (Text.Length > 0)
+                            Text += "+";
+                        Text += t;
+                    }
+                }
+                CommonInterfaceMethods.DrawSkillQuickslotIcon(Position, sd, i, Text);
+                Position.X += SlotDistance;
+            }
         }
     }
 }
