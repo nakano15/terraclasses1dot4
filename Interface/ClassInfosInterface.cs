@@ -227,26 +227,39 @@ namespace terraclasses.Interface
                         }
                         SkillData Skill = Index < Class.GetSkills.Length ? Class.GetSkills[Index] : null;
                         CommonInterfaceMethods.DrawSkillIcon(SkillSlotPositions, Skill);
-                        if (Skill != null && CommonInterfaceMethods.IsMouseOverIcon(SkillSlotPositions))
+                        if (Skill != null)
                         {
-                            MouseText = Skill.Name;
-                            if (Main.mouseLeft && Main.mouseLeftRelease)
+                            if (SelectedSkill == Index)
                             {
-                                if (SelectedSkill == Index)
+                                SkillSlotPositions.Y += 4;
+                            }
+                            Vector2 QuickSlotIconPosition = new Vector2(SkillSlotPositions.X + 36f, SkillSlotPositions.Y + 36f);
+                            bool IsMouseOver = false;
+                            if (Skill.IsUnlocked && Skill.SkillType != SkillTypes.Passive && CommonInterfaceMethods.SkillGetIconButton(QuickSlotIconPosition, out IsMouseOver))
+                            {
+                                ClassHeldIconInterface.BeginHoldingSkillIcon(SelectedClass, Index);
+                            }
+                            else if (CommonInterfaceMethods.IsMouseOverIcon(SkillSlotPositions))
+                            {
+                                MouseText = Skill.Name;
+                                if (Main.mouseLeft && Main.mouseLeftRelease)
                                 {
-                                    SelectedSkill = -1;
-                                    OnSelectSkill(null);
-                                }
-                                else
-                                {
-                                    SelectedSkill = Index;
-                                    OnSelectSkill(Skill);
+                                    if (SelectedSkill == Index)
+                                    {
+                                        SelectedSkill = -1;
+                                        OnSelectSkill(null);
+                                    }
+                                    else
+                                    {
+                                        SelectedSkill = Index;
+                                        OnSelectSkill(Skill);
+                                    }
                                 }
                             }
-                        }
-                        if (SelectedSkill == Index)
-                        {
-                            SkillSlotPositions.Y += 4;
+                            if (IsMouseOver)
+                            {
+                                MouseText += "\nClick to get icon, and then click a quick slot to place.";
+                            }
                         }
                         SkillSlotPositions.X += SlotDistance;
                     }
@@ -258,7 +271,7 @@ namespace terraclasses.Interface
                 int PanelWidth = (int)((WindowWidth - 16) * .5f);
                 Vector2 SkillInfoPosition = Position;
                 Vector2 SkillAttributesInfoPosition = Position + Vector2.UnitX * ((WindowWidth - 16) * .5f);
-                SkillData Skill = SelectedSkill > -1 ? Class.GetSkills[SelectedSkill] : null;
+                SkillData Skill = (Class != null && SelectedSkill > -1) ? Class.GetSkills[SelectedSkill] : null;
                 //Height = 208
                 Color TextColor = Color.White;
                 DrawLabel(SkillInfoPosition, Skill != null ? Skill.Name : "", PanelWidth, LabelHeight, TextColor);
@@ -280,7 +293,7 @@ namespace terraclasses.Interface
                     SkillAttributesInfoPosition += Vector2.One * 8f;
                     Utils.DrawBorderString(Main.spriteBatch, "Skill Attributes", SkillAttributesInfoPosition, Color.White);
                     SkillAttributesInfoPosition.Y += 30;
-                    bool HasSkillPoint = Class.GetSkillPoints > 0;
+                    bool HasSkillPoint = Class != null && Class.GetSkillPoints > 0;
                     for (int i = 0; i < MaxAttributeDisplay; i++)
                     {
                         Vector2 AttributePosition = SkillAttributesInfoPosition + Vector2.UnitY * i * 24f;

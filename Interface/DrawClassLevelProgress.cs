@@ -87,6 +87,19 @@ namespace terraclasses.Interface
                         Text += t;
                     }
                 }
+                if (Main.mouseX >= Position.X && Main.mouseX < Position.X + 40 && 
+                    Main.mouseY >= Position.Y && Main.mouseY < Position.Y + 40)
+                {
+                    MainMod.GetPlayerCharacter().mouseInterface = true;
+                    if (ClassHeldIconInterface.IsHoldingSkillIcon && Main.mouseLeft && Main.mouseLeftRelease)
+                    {
+                        ClassHeldIconInterface.GetHeldSkillIcon(out int ClassPos, out int SkillPos);
+                        if (ClassPos > -1 && SkillPos > -1 && SkillSlot.IsSlotForSkill(MainMod.GetPlayerCharacter().GetModPlayer<PlayerMod>().GetClasses[ClassPos].GetSkills[SkillPos], i))
+                        {
+                            pm.SetSkillToSlot(i, ClassPos, SkillPos);
+                        }
+                    }
+                }
                 CommonInterfaceMethods.DrawSkillQuickslotIcon(Position, sd, i, Text);
                 Position.X += SlotDistance;
             }

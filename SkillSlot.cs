@@ -1,3 +1,5 @@
+using System;
+
 namespace terraclasses
 {
     public struct SkillSlot
@@ -11,10 +13,23 @@ namespace terraclasses
             ClassIndex = -1;
         }
 
-        public SkillSlot(int NewSlot, int ClassIndex)
+        public SkillSlot(int ClassIndex, int SkillSlot)
         {
-            Slot = NewSlot;
+            Slot = SkillSlot;
             this.ClassIndex = ClassIndex;
+        }
+
+        public static bool IsSlotForSkill(SkillData skill, int Index)
+        {
+            switch (skill.SkillType)
+            {
+                case SkillTypes.Active:
+                case SkillTypes.Toggle:
+                    return Index < 4;
+                case SkillTypes.Combat:
+                    return Index == 4;
+            }
+            return false;
         }
     }
 }

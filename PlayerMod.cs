@@ -98,13 +98,31 @@ namespace terraclasses
             }
         }
 
-        public SkillData GetSkillFromSlot(int Index)
+        public bool SetSkillToSlot(int Index, int ClassPosition, int SkillPosition)
         {
             if (Index >= 0 && Index < 5)
             {
-                if (Index == 4)
-                    return GetSkillFromSlot(CombatSkillSlot);
-                return GetSkillFromSlot(ActiveSkillSlots[Index]);
+                if (ClassPosition >= 0 && SkillPosition >= 0 && ClassPosition < MaxClasses && Classes[ClassPosition].IsUnlocked && SkillPosition < Classes[ClassPosition].GetSkills.Length)
+                {
+                    if (Index == 4)
+                    {
+                        CombatSkillSlot = new SkillSlot(ClassPosition, SkillPosition);
+                    }
+                    else
+                    {
+                        ActiveSkillSlots[Index] = new SkillSlot(ClassPosition, SkillPosition);
+                    }
+                }
+            }
+            return false;
+        }
+
+        public SkillData GetSkillFromSlot(int Index)
+        {
+            SkillSlot? Slot = GetSlotFromIndex(Index);
+            if (Slot.HasValue)
+            {
+                return GetSkillFromSlot(Slot.Value);
             }
             return null;
         }
@@ -113,11 +131,22 @@ namespace terraclasses
         {
             if (slot.Slot > -1 && slot.ClassIndex > -1 && slot.ClassIndex < Classes.Length && Classes[slot.ClassIndex].IsUnlocked)
             {
-                if (Classes[slot.ClassIndex].GetSkills.Length < slot.Slot)
+                if (slot.Slot < Classes[slot.ClassIndex].GetSkills.Length)
                 {
                     return Classes[slot.ClassIndex].GetSkills[slot.Slot];
                 }
             }
+            return null;
+        }
+
+        public SkillSlot? GetSlotFromIndex(int Index)
+        {
+            if (Index == 4)
+            {
+                return CombatSkillSlot;
+            }
+            else if (Index < 4)
+                return ActiveSkillSlots[Index];
             return null;
         }
 

@@ -23,7 +23,7 @@ namespace terraclasses
 		static Mod self;
 		public static Asset<Texture2D> CastBarTexture, MagicCircleTexture;
 		public static Asset<Texture2D> CerberusTexture, CerberusHeadTexture;
-		public static Asset<Texture2D> ExpBarTexture, SkillUpButtonTexture;
+		public static Asset<Texture2D> ExpBarTexture, SkillUpButtonTexture, SkillIconPlusButtonTexture;
 		public static Asset<Texture2D> ClassIconsTexture;
 		public static Asset<Texture2D> SkillIconsTexture;
 		public static Asset<Texture2D> ClassIconSlotTexture, SkillQuickslotTexture;
@@ -47,6 +47,7 @@ namespace terraclasses
 				CerberusHeadTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/CerberusBiteHead");
 				ExpBarTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/LevelArrow");
 				SkillUpButtonTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/SkillUpArrowButton");
+				SkillIconPlusButtonTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/PlusButton");
 				SkillSlot = new ModKeybind[4];
 				SkillSlot[0] = KeybindLoader.RegisterKeybind(this, "Skill Slot 1", "Q");
 				SkillSlot[1] = KeybindLoader.RegisterKeybind(this, "Skill Slot 2", "Z");

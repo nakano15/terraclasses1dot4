@@ -241,6 +241,16 @@ namespace terraclasses.Interface
             Position.X += 4;
             Position.Y += 4;
             DrawSkillIcon(Position, Skill);
+            Vector2 QuickslotIconPosition = new Vector2(Position.X + 36f, Position.Y + 36f);
+            bool IsMouseOver = false;
+            if (Skill.IsUnlocked && Skill.SkillType != SkillTypes.Passive && CommonInterfaceMethods.SkillGetIconButton(QuickslotIconPosition, out IsMouseOver))
+            {
+                ClassHeldIconInterface.BeginHoldingSkillIcon(SelectedClass, SelectedSkill);
+            }
+            if (IsMouseOver)
+            {
+                MouseText = "Click to get icon, and then click a quick slot to place.";
+            }
             Position.X += ClassSlotDistance;
             Utils.DrawBorderString(Main.spriteBatch, Skill.Name, Position, Color.White);
             Position.Y += 24f;

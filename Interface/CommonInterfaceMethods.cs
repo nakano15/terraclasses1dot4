@@ -117,5 +117,23 @@ namespace terraclasses.Interface
                 Utils.DrawBorderString(Main.spriteBatch, QuickSlotKey, Position, Color.White, .7f);
             }
         }
+
+        public static bool SkillGetIconButton(Vector2 Position, out bool MouseOver)
+        {
+            if (ClassHeldIconInterface.IsHoldingSkillIcon)
+            {
+                MouseOver = false;
+                return false;
+            }
+            Main.spriteBatch.Draw(terraclasses.SkillIconPlusButtonTexture.Value, Position, Color.White);
+            if (Main.mouseX >= Position.X && Main.mouseX < Position.X + 16 && 
+                Main.mouseY >= Position.Y && Main.mouseY < Position.Y + 16)
+            {
+                MouseOver = true;
+                return Main.mouseLeft && Main.mouseLeftRelease;
+            }
+            MouseOver = false;
+            return false;
+        }
     }
 }
