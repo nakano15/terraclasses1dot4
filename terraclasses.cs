@@ -30,11 +30,19 @@ namespace terraclasses
 		internal static ModKeybind[] SkillSlot;
 		public static bool ShowExpRewardAsPercentage = true;
 
+		public static List<ClassID> StarterClasses = new List<ClassID>();
+		internal static List<ClassID> UnlockedClasses = new List<ClassID>();
+
         public override void Load()
         {
 			self = this;
 			SkillContainer.AddSkillContainer(this, new SkillDB());
 			ClassContainer.AddClassContainer(this, new ClassDB());
+			//
+			StarterClasses.Add(new ClassID(ClassDB.Terrarian, this));
+			StarterClasses.Add(new ClassID(ClassDB.Fighter, this));
+			UnlockedClasses.Add(new ClassID(ClassDB.Cerberus, this));
+			//
 			if (!Main.dedServ)
 			{
 				ClassIconSlotTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/ClassIconSlot");
@@ -68,7 +76,16 @@ namespace terraclasses
 			CerberusHeadTexture = null;
 			ClassContainer.Unload();
 			SkillContainer.Unload();
+			StarterClasses.Clear();
+			StarterClasses = null;
+			UnlockedClasses.Clear();
+			UnlockedClasses = null;
         }
+
+		public static ClassID[] GetUnlockedClasses(params ClassID[] Exceptions)
+		{
+			return StarterClasses.Union(UnlockedClasses).Except(Exceptions).ToArray();
+		}
 
         public override void PostSetupContent()
         {

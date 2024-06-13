@@ -63,7 +63,20 @@ namespace terraclasses
                     sd.UpdateSkillUnlockedState();
                 }
             }
-            Classes[1].ChangeClass(ClassDB.Fighter);
+            //Classes[1].ChangeClass(ClassDB.Fighter);
+        }
+
+        public ClassID[] GetUnlockedClassIDs()
+        {
+            List<ClassID> Ids = new List<ClassID>();
+            foreach (ClassData cd in Classes)
+            {
+                if (cd.IsUnlocked)
+                {
+                    Ids.Add(cd.GetClassID);
+                }
+            }
+            return Ids.ToArray();
         }
 
         internal static void AddSkillToActiveSkills(Player player, SkillData sd)

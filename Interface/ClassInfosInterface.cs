@@ -24,11 +24,49 @@ namespace terraclasses.Interface
         static string[] ClassDescription = new string[0],
             SkillDescription = new string[0];
         const int ClassDescriptionMaxLines = 4, SkillDescriptionMaxLines = 6, MaxAttributeDisplay = 6;
+        const int NewClassHorizontalSlots = (WindowWidth - 32) / 60, 
+            NewClassVerticalSlots = (280 - 32) / 60, 
+            NewClassTotalSlots = NewClassHorizontalSlots * NewClassVerticalSlots;
         static int ClassDescriptionPage = 0, ClassDescriptionMaxPages = 0;
         static int SkillDescriptionPage = 0, SkillDescriptionMaxPages = 0;
         static int AttributesPage = 0, AttributesMaxPages = 0;
         const int MaxSkillIconsPerRow = 11;
         static int SkillScrollPage = 0, SkillScrollMaxPages = 0;
+        static int NewClassSelected
+        {
+            get
+            {
+                return SelectedSkill;
+            }
+            set
+            {
+                SelectedSkill = value;
+            }
+        }
+        static int NewClassScrollPage
+        {
+            get
+            {
+                return SkillScrollPage;
+            }
+            set
+            {
+                SkillScrollPage = value;
+            }
+        }
+        static int NewClassScrollMaxPage
+        {
+            get
+            {
+                return SkillScrollMaxPages;
+            }
+            set
+            {
+                SkillScrollMaxPages = value;
+            }
+        }
+        static ClassID[] NewClasses = null;
+        static ClassBase[] NewClassesBase = null;
 
         public ClassInfosInterface() :
             base("TerraClasses : Class Infos", DrawInterface, InterfaceScaleType.UI)
@@ -62,6 +100,8 @@ namespace terraclasses.Interface
             SelectedSkill = -1;
             ClassDescription = new string[0];
             SkillDescription = new string[0];
+            NewClasses = null;
+            NewClassesBase = null;
         }
 
         static bool DrawInterface()
@@ -100,7 +140,10 @@ namespace terraclasses.Interface
             string MouseText = "";
             PlayerMod pm = player.GetModPlayer<PlayerMod>();
             DrawClassInfos(StartPosition, pm, ref MouseText);
-            DrawSkillInfos(StartPosition, pm, ref MouseText);
+            if (SelectedClass > -1 && !pm.GetClasses[SelectedClass].IsUnlocked)
+                DrawNewClassSelectionInterface(StartPosition, pm, ref MouseText);
+            else
+                DrawSkillInfos(StartPosition, pm, ref MouseText);
             if (MouseText != "")
             {
                 MouseOverInterface.ChangeMouseText(MouseText);
@@ -150,6 +193,19 @@ namespace terraclasses.Interface
                             if (CanUnlockNextClass)
                             {
                                 MouseText = "New Class Slot Unlocked!\nClick to pick a new class.";
+                                if (Main.mouseLeft && Main.mouseLeftRelease)
+                                {
+                                    if (SelectedClass == i)
+                                    {
+                                        SelectedClass = -1;
+                                        OnSelectClass(null);
+                                    }
+                                    else
+                                    {
+                                        SelectedClass = i;
+                                        OnSelectClass(Class);
+                                    }
+                                }
                             }
                             else
                             {
@@ -198,7 +254,7 @@ namespace terraclasses.Interface
                     else
                     {
                         InterfaceHelper.DrawBackgroundPanel(InfoPosition, WindowWidth - 16, 96, PanelColor);
-                        Utils.DrawBorderString(Main.spriteBatch, "This class is locked.", InfoPosition + Vector2.One * 4, Color.White);
+                        Utils.DrawBorderString(Main.spriteBatch, "Pick a new class from the list bellow.", InfoPosition + Vector2.One * 4, Color.White);
                     }
                 }
                 else
@@ -206,6 +262,86 @@ namespace terraclasses.Interface
                     InterfaceHelper.DrawBackgroundPanel(InfoPosition, WindowWidth - 16, 96, PanelColor);
                     Utils.DrawBorderString(Main.spriteBatch, "No class selected.", InfoPosition + Vector2.One * 4, Color.White);
                 }
+            }
+        }
+
+        static void DrawNewClassSelectionInterface(Vector2 StartPosition, PlayerMod pm, ref string MouseText)
+        {
+            Vector2 Position = new Vector2(StartPosition.X + 8, StartPosition.Y + 228);
+            Color TextColor = Color.White;
+            if (NewClassSelected == -1)
+            {
+                InterfaceHelper.DrawBackgroundPanel(Position, WindowWidth - 16, 280, PanelColor);
+                for (int y = 0; y < NewClassVerticalSlots; y++)
+                {
+                    for (int x = 0; x < NewClassHorizontalSlots; x++)
+                    {
+                        int Index = x + y * NewClassHorizontalSlots + NewClassScrollPage * NewClassTotalSlots;
+                        if (Index < NewClasses.Length)
+                        {
+                            Vector2 IconPos = Position + new Vector2(60 * x + 8, 60 * y + 8);
+                            if (CommonInterfaceMethods.IsMouseOverIcon(IconPos))
+                            {
+                                MouseText = NewClassesBase[Index].Name;
+                                if (Main.mouseLeft && Main.mouseLeftRelease)
+                                {
+                                    NewClassSelected = Index;
+                                    OnSelectNewClass(NewClassesBase[Index]);
+                                }
+                            }
+                            CommonInterfaceMethods.DrawClassSlotIcon(IconPos, NewClassesBase[Index]);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ClassBase Class = NewClassesBase[NewClassSelected];
+                CommonInterfaceMethods.DrawClassSlotIcon(Position, Class);
+                Position.X += 60;
+                DrawLabel(Position, Class.Name, WindowWidth - 80, 28, TextColor);
+                Position.Y += 32;
+                const int SubPanelWidth = (WindowWidth - 80) / 2;
+                DrawLabel(Position, Class.GetClassType(), SubPanelWidth, 28, TextColor);
+                Position.X += SubPanelWidth;
+                DrawLabel(Position, "Max Level: " + Class.MaxLevel, SubPanelWidth, 28, TextColor);
+                Position.Y += 32;
+                Position.X -= 60 + SubPanelWidth;
+                InterfaceHelper.DrawBackgroundPanel(Position, WindowWidth - 16, 32 * 4, PanelColor);
+                for (int i = 0; i < ClassDescriptionMaxLines; i++)
+                {
+                    int Index = i + SkillDescriptionMaxLines * SkillDescriptionPage;
+                    if (Index >= SkillDescription.Length) break;
+                    Vector2 DescPosition = new Vector2(Position.X + 4, Position.Y + 4 + 22f * i);
+                    Utils.DrawBorderString(Main.spriteBatch, SkillDescription[i], DescPosition, TextColor);
+                }
+                Position.Y += 32 * 4 + 8;
+                Color ButtonColor = Color.White;
+                if (Main.mouseX >= Position.X && Main.mouseX < Position.X + SubPanelWidth &&
+                    Main.mouseY >= Position.Y && Main.mouseY < Position.Y + 32)
+                {
+                    ButtonColor = Color.Yellow;
+                    if (Main.mouseLeft && Main.mouseLeftRelease)
+                    {
+                        ClassData cd = player.GetModPlayer<PlayerMod>().GetClasses[SelectedClass];
+                        cd.ChangeClass(NewClasses[NewClassSelected].ID, NewClasses[NewClassSelected].ModID);
+                        Main.NewText("Class ["+cd.Name+"] acquired!");
+                        OnSelectClass(cd);
+                    }
+                }
+                DrawLabel(Position, "Change Class", SubPanelWidth, 32, ButtonColor);
+                Position.X += WindowWidth - 16 - SubPanelWidth;
+                ButtonColor = Color.White;
+                if (Main.mouseX >= Position.X && Main.mouseX < Position.X + SubPanelWidth &&
+                    Main.mouseY >= Position.Y && Main.mouseY < Position.Y + 32)
+                {
+                    ButtonColor = Color.Yellow;
+                    if (Main.mouseLeft && Main.mouseLeftRelease)
+                    {
+                        NewClassSelected = -1;
+                    }
+                }
+                DrawLabel(Position, "Return", SubPanelWidth, 32, ButtonColor);
             }
         }
 
@@ -341,6 +477,8 @@ namespace terraclasses.Interface
 
         static void OnSelectClass(ClassData Class)
         {
+            NewClasses = null;
+            NewClassesBase = null;
             if (Class != null)
             {
                 ClassDescription = InterfaceHelper.WordwrapText(Class.Base.Description, FontAssets.MouseText.Value, 344);
@@ -348,6 +486,15 @@ namespace terraclasses.Interface
                 ClassDescriptionPage = 0;
                 SelectedSkill = -1;
                 OnSelectSkill(null);
+                if (!Class.IsUnlocked)
+                {
+                    NewClasses = terraclasses.GetUnlockedClasses(player.GetModPlayer<PlayerMod>().GetUnlockedClassIDs());
+                    NewClassesBase = new ClassBase[NewClasses.Length];
+                    for(int i = 0; i < NewClasses.Length; i++)
+                    {
+                        NewClassesBase[i] = ClassContainer.GetClass(NewClasses[i].ID, NewClasses[i].ModID);
+                    }
+                }
             }
             else
             {
@@ -368,6 +515,20 @@ namespace terraclasses.Interface
                 SkillDescriptionPage = 0;
                 AttributesMaxPages = Skill.Base.GetSkillAttributes.Length / MaxAttributeDisplay;
                 AttributesPage = 0;
+            }
+        }
+
+        static void OnSelectNewClass(ClassBase Class)
+        {
+            if (Class == null)
+            {
+                SkillDescription = new string[0];
+            }
+            else
+            {
+                SkillDescription = InterfaceHelper.WordwrapText(Class.Description, FontAssets.MouseText.Value, WindowWidth - 16);
+                SkillDescriptionMaxPages = SkillDescription.Length / ClassDescriptionMaxLines;
+                SkillDescriptionPage = 0;
             }
         }
     }

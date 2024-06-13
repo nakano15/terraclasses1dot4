@@ -15,6 +15,7 @@ namespace terraclasses
         }}
         public uint GetID { get { return ID; } }
         public string GetModID { get { return ModID; } }
+        public ClassID GetClassID => new ClassID(ID, ModID);
         public string Name => Base.Name;
         public int MaxLevel => Base.MaxLevel;
         public bool IsMastered => Level >= MaxLevel;

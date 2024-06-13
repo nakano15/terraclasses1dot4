@@ -126,12 +126,12 @@ namespace terraclasses.Skills.Cerberus
                     else if (drawInfo.cHead > 0 && dd.texture == TextureAssets.ArmorHead[drawInfo.cHead].Value)
                     {
                         drawInfo.DrawDataCache.RemoveAt(t);
-                        t--;
+                        //t--;
                     }
                     else if ((!drawInfo.fullHair && dd.texture == TextureAssets.PlayerHairAlt[player.hair].Value) || dd.texture == TextureAssets.PlayerHair[player.hair].Value)
                     {
                         drawInfo.DrawDataCache.RemoveAt(t);
-                        t--;
+                        //t--;
                     }
                     else if (dd.texture == TextureAssets.Players[drawInfo.skinVar, Terraria.ID.PlayerTextureID.Eyes].Value)
                     {

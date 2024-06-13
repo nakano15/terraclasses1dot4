@@ -54,6 +54,24 @@ namespace terraclasses.Interface
             }
         }
 
+        public static void DrawClassSlotIcon(Vector2 Position, ClassBase Class)
+        {
+            Texture2D ClassSlotTexture = terraclasses.ClassIconSlotTexture.Value;
+            Main.spriteBatch.Draw(ClassSlotTexture, Position, new Rectangle(0, 0, 56, 56), Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
+            Texture2D ClassIcon;
+            Rectangle ClassRect;
+            Class.GetClassIcon(out ClassIcon, out ClassRect);
+            float Scale = ClassRect.Width;
+            if (Scale < ClassRect.Height)
+            {
+                Scale = ClassRect.Height;
+            }
+            Scale = 48f / Scale;
+            Position.X += 4;
+            Position.Y += 4;
+            Main.spriteBatch.Draw(ClassIcon, Position, ClassRect, Color.White, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+        }
+
         public static void DrawSkillIcon(Vector2 Position, SkillData Skill, string QuickSlotKey = "")
         {
             Texture2D ClassSlotTexture = terraclasses.ClassIconSlotTexture.Value;

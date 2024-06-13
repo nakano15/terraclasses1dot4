@@ -27,6 +27,11 @@ namespace terraclasses
         bool InvalidClass = false;
         public bool IsInvalidClass => InvalidClass;
 
+        public string GetClassType()
+        {
+            return "Class Type: " + ClassType.ToString();
+        }
+
         public virtual void GetClassIcon(out Texture2D Texture, out Rectangle Rect)
         {
             Texture = terraclasses.ClassIconsTexture.Value;
