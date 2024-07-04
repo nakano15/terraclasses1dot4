@@ -4,6 +4,8 @@ using Terraria.Audio;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace terraclasses
 {
@@ -144,6 +146,25 @@ namespace terraclasses
             {
                 Base.Update(this);
                 Time++;
+                UpdateCooldowns();
+            }
+        }
+
+        void UpdateCooldowns()
+        {
+            int[] keys = NpcDamageCooldown.Keys.ToArray();
+            foreach (int k in keys)
+            {
+                NpcDamageCooldown[k]--;
+                if (NpcDamageCooldown[k] <= 0)
+                    NpcDamageCooldown.Remove(k);
+            }
+            keys = PlayerDamageCooldown.Keys.ToArray();
+            foreach (int k in keys)
+            {
+                PlayerDamageCooldown[k]--;
+                if (PlayerDamageCooldown[k] <= 0)
+                    PlayerDamageCooldown.Remove(k);
             }
         }
 

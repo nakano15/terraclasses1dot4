@@ -166,14 +166,15 @@ namespace terraclasses.Interface
                             MouseText = "New Class Unlocked\nClick to pick new one.";
                             if (Main.mouseLeft && Main.mouseLeftRelease)
                             {
-                                if (SelectedClass == i)
+                                ClassInfosInterface.Open(i);
+                                /*if (SelectedClass == i)
                                 {
                                     SelectedClass = -1;
                                 }
                                 else
                                 {
                                     SelectedClass = i;
-                                }
+                                }*/
                             }
                         }
                         else
@@ -270,27 +271,16 @@ namespace terraclasses.Interface
             {
                 Vector2 InfoPosition = new Vector2(Position.X, Position.Y);
                 int Level = Skill.GetAttributeLevel(i);
-                if (HasSkillPoints && Class.GetSkillPoints >= att[i].PointsUsed && Skill.GetAttributeLevel(i) < att[i].MaxLevel)
-                {
-                    const string IncreaseText = "+";
-                    Vector2 Dimension = FontAssets.MouseText.Value.MeasureString(IncreaseText) * .8f;
-                    if (Main.mouseX >= InfoPosition.X && Main.mouseX < InfoPosition.X + Dimension.X && 
-                        Main.mouseY >= InfoPosition.Y && Main.mouseY < InfoPosition.Y + Dimension.Y)
-                    {
-                        MouseText = "Uses " + att[i].PointsUsed + " Skill Points to Level Up.";
-                        if (Main.mouseLeft && Main.mouseLeftRelease)
-                        {
-                            Class.SpendSkillPointOnSkillAttribute(SelectedSkill, i);
-                        }
-                    }
-                    Utils.DrawBorderString(Main.spriteBatch, IncreaseText, InfoPosition, Color.Green, 0.8f);
-                    InfoPosition.X += Dimension.X;
-                }
-                string Text = att[i].AttributeDescription(Level);
+                string Text = att[i].Name + "Lv: " + Level;
                 Utils.DrawBorderString(Main.spriteBatch, Text, InfoPosition, Color.White, 0.8f);
                 float Percent = att[i].MaxLevel > 0 ? ((float)Level / att[i].MaxLevel) : 1f;
                 Text = Text.Substring(0, (int)(Text.Length * Percent));
                 Utils.DrawBorderString(Main.spriteBatch, Text, InfoPosition, Color.Yellow, 0.8f);
+                if (Main.mouseX >= InfoPosition.X && Main.mouseX < InfoPosition.X + InternalWidth - 4 && 
+                    Main.mouseY >= InfoPosition.Y && Main.mouseY < InfoPosition.Y + 24)
+                {
+                    MouseText = att[i].AttributeDescription(Level);
+                }
                 Position.Y += 24f;
             }
         }

@@ -27,6 +27,7 @@ namespace terraclasses
 		public static Asset<Texture2D> ClassIconsTexture;
 		public static Asset<Texture2D> SkillIconsTexture;
 		public static Asset<Texture2D> ClassIconSlotTexture, SkillQuickslotTexture;
+		public static Asset<Texture2D> CleaveEffectTexture;
 		internal static ModKeybind[] SkillSlot;
 		public static bool ShowExpRewardAsPercentage = true;
 
@@ -53,6 +54,7 @@ namespace terraclasses
 				MagicCircleTexture = ModContent.Request<Texture2D>("terraclasses/Content/MagicCircle");
 				CerberusTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/cerberus");
 				CerberusHeadTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/CerberusBiteHead");
+				CleaveEffectTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/CleaveAnimation");
 				ExpBarTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/LevelArrow");
 				SkillUpButtonTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/SkillUpArrowButton");
 				SkillIconPlusButtonTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/PlusButton");

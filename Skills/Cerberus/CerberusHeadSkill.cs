@@ -16,7 +16,7 @@ namespace terraclasses.Skills.Cerberus
         const int ATTRIBUTE_DAMAGE = 0, ATTRIBUTE_RANGE = 1, ATTRIBUTE_AMOUNT = 2, ATTRIBUTE_BURN = 3;
 
         public override string Name => "Cerberus Head";
-        public override string Description => "Empowers Cerberus Head.";
+        public override string Description => "Invokes Cerberus Heads when attacking or attacked, to bite your foes.";
         protected override SkillAttribute[] SetSkillAttributes => new SkillAttribute[]
         {
             new Damage(), new Range(), new Amount(), new OnFireInflictRate()
@@ -130,11 +130,11 @@ namespace terraclasses.Skills.Cerberus
                 UpperMouthOrigin += MouthMoveOrientationByRotation;
                 LowerMouthOrigin -= MouthMoveOrientationByRotation;
                 int FrameX = head.MouthFull ? 64 : 0;
-                Terraria.DataStructures.DrawData dd = new Terraria.DataStructures.DrawData(HeadTexture, head.Position - Main.screenPosition,
+                DrawData dd = new DrawData(HeadTexture, head.Position - Main.screenPosition,
                     new Rectangle(FrameX, 0, 64, 64), Color.White * Opacity, head.Rotation, LowerMouthOrigin, head.Scale, SpriteEffects.None, 0);
                 dd.ignorePlayerRotation = true;
                 drawInfo.DrawDataCache.Insert(0 + PosSum * 2, dd);
-                dd = new Terraria.DataStructures.DrawData(HeadTexture, head.Position - Main.screenPosition,
+                dd = new DrawData(HeadTexture, head.Position - Main.screenPosition,
                      new Rectangle(FrameX, 64, 64, 64), Color.White * Opacity, head.Rotation, UpperMouthOrigin, head.Scale, SpriteEffects.None, 0);
                 dd.ignorePlayerRotation = true;
                 drawInfo.DrawDataCache.Insert(1 + PosSum * 2, dd);
@@ -197,6 +197,8 @@ namespace terraclasses.Skills.Cerberus
 
         class Damage : SkillAttribute
         {
+            public override string Name => "Damage Increase";
+
             public override string AttributeDescription(int Level)
             {
                 return "Inflicts " + (int)(Value(Level) * 100) + "% Melee Damage.";
@@ -212,6 +214,8 @@ namespace terraclasses.Skills.Cerberus
 
         class Range : SkillAttribute
         {
+            public override string Name => "Heads Size";
+
             public override string AttributeDescription(int Level)
             {
                 return "Head Size: " + (int)(Value(Level) * 100) + "%.";
@@ -227,21 +231,25 @@ namespace terraclasses.Skills.Cerberus
 
         class Amount : SkillAttribute
         {
+            public override string Name => "Bite Times";
+
             public override string AttributeDescription(int Level)
             {
                 return "Bites " + (int)(Value(Level)) + " times.";
             }
 
-            public override int MaxLevel => 10;
+            public override int MaxLevel => 5;
 
             public override float Value(int Level)
             {
-                return 3 + (int)(Level * .33f);
+                return 3 + Level;
             }
         }
 
         class OnFireInflictRate : SkillAttribute
         {
+            public override string Name => "On Fire! Inflict Rate";
+
             public override string AttributeDescription(int Level)
             {
                 return "Has 1 in " + (int)(Value(Level)) + " chance of inflicting On Fire! debuff.";

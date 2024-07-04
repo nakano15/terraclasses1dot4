@@ -12,7 +12,9 @@ namespace terraclasses.Classes.Primary
         protected override Color SkillColor => new Color(204, 81, 23);
         protected override SkillUnlockInfo[] SetSkills => new SkillUnlockInfo[]
         {
-            new SkillUnlockInfo(SkillDB.SwordMastery)
+            new SkillUnlockInfo(SkillDB.SwordMastery),
+            new SkillUnlockInfo(SkillDB.Endure),
+            new SkillUnlockInfo(SkillDB.Cleave)
         };
         public override void GetClassIcon(out Texture2D Texture, out Rectangle Rect)
         {

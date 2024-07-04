@@ -323,7 +323,10 @@ namespace terraclasses.Interface
                     ButtonColor = Color.Yellow;
                     if (Main.mouseLeft && Main.mouseLeftRelease)
                     {
-                        ClassData cd = player.GetModPlayer<PlayerMod>().GetClasses[SelectedClass];
+                        int ClassIndex = SelectedClass;
+                        if (Class.ClassType == ClassTypes.Aspect)
+                            ClassIndex = 0;
+                        ClassData cd = player.GetModPlayer<PlayerMod>().GetClasses[ClassIndex];
                         cd.ChangeClass(NewClasses[NewClassSelected].ID, NewClasses[NewClassSelected].ModID);
                         Main.NewText("Class ["+cd.Name+"] acquired!");
                         OnSelectClass(cd);
