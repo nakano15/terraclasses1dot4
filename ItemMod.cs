@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using System.Collections.Generic;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class ItemMod : GlobalItem
     {

@@ -1,5 +1,5 @@
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public enum ItemTypes : ushort
     {

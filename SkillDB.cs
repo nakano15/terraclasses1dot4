@@ -1,6 +1,6 @@
-using terraclasses.Skills;
+using terraclasses1dot4.Skills;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class SkillDB : SkillContainer
     {

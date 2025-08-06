@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Microsoft.CodeAnalysis;
 
-namespace terraclasses.Skills.Fighter
+namespace terraclasses1dot4.Skills.Fighter
 {
     public class Endure : SkillBase
     {
@@ -21,7 +21,7 @@ namespace terraclasses.Skills.Fighter
             new SkillDuration()
         };
 
-        public override void Update(SkillData Data)
+        public override void Update()
         {
             if (Data.GetTime >= Data.GetSkillAttributeValue(2))
             {
@@ -29,21 +29,21 @@ namespace terraclasses.Skills.Fighter
             }
         }
 
-        public override void UpdateStatus(SkillData Data)
+        public override void UpdateStatus()
         {
             if (Data.GetSkillAttributeValue(1) > 0)
                 Data.GetCaster.noKnockback = true;
         }
 
-        public override void ModifyHitByNPC(SkillData data, NPC npc, ref Player.HurtModifiers modifiers)
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
-            float DR = 1f - data.GetSkillAttributeValue(0);
+            float DR = 1f - Data.GetSkillAttributeValue(0);
             modifiers.FinalDamage *= DR;
         }
 
-        public override void ModifyHitByProjectile(SkillData data, Projectile proj, ref Player.HurtModifiers modifiers)
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
-            float DR = 1f - data.GetSkillAttributeValue(0);
+            float DR = 1f - Data.GetSkillAttributeValue(0);
             modifiers.FinalDamage *= DR;
         }
 

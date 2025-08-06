@@ -8,7 +8,7 @@ using Terraria.DataStructures;
 using System;
 using Mono.CompilerServices.SymbolWriter;
 
-namespace terraclasses.Skills.Cerberus
+namespace terraclasses1dot4.Skills.Cerberus
 {
     public class CerberusFormSkill : SkillBase
     {
@@ -23,7 +23,7 @@ namespace terraclasses.Skills.Cerberus
             new FireDamageImmunity()
         };
 
-        public override void Update(SkillData Data)
+        public override void Update()
         {
             Player Caster = Data.GetCaster;
             int FireImLv = Data.GetAttributeLevel(1);

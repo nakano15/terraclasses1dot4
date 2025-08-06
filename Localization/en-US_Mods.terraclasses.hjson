@@ -33,3 +33,139 @@ Configs: {
 		Dagger.Label: Dagger
 	}
 }
+
+dot4: {
+	Keybinds: {
+		"Skill Slot 1": {
+			DisplayName: {
+				$parentVal: Skill  Slot 1
+			}
+		}
+
+		"Skill Slot 2": {
+			DisplayName: {
+				$parentVal: Skill  Slot 2
+			}
+		}
+
+		"Skill Slot 3": {
+			DisplayName: {
+				$parentVal: Skill  Slot 3
+			}
+		}
+
+		"Skill Slot 4": {
+			DisplayName: {
+				$parentVal: Skill  Slot 4
+			}
+		}
+	}
+
+	Configs: {
+		ConfigMod: {
+			DisplayName: {
+				$parentVal: Config Mod
+			}
+
+			ItemTypesList: {
+				Label: {
+					$parentVal: Item Types List
+				}
+
+				Tooltip: {
+					$parentVal: ""
+				}
+			}
+		}
+
+		ItemTypes: {
+			Tooltip: {
+				$parentVal: ""
+			}
+
+			None: {
+				Label: {
+					$parentVal: None
+				}
+			}
+
+			Sword: {
+				Label: {
+					$parentVal: Sword
+				}
+			}
+
+			Spear: {
+				Label: {
+					$parentVal: Spear
+				}
+			}
+
+			Axe: {
+				Label: {
+					$parentVal: Axe
+				}
+			}
+
+			Pickaxe: {
+				Label: {
+					$parentVal: Pickaxe
+				}
+			}
+
+			Hammer: {
+				Label: {
+					$parentVal: Hammer
+				}
+			}
+
+			Bow: {
+				Label: {
+					$parentVal: Bow
+				}
+			}
+
+			Throwable: {
+				Label: {
+					$parentVal: Throwable
+				}
+			}
+
+			Rifle: {
+				Label: {
+					$parentVal: Rifle
+				}
+			}
+
+			Pistol: {
+				Label: {
+					$parentVal: Pistol
+				}
+			}
+
+			DartGun: {
+				Label: {
+					$parentVal: Dart Gun
+				}
+			}
+
+			MagicRod: {
+				Label: {
+					$parentVal: Magic Rod
+				}
+			}
+
+			Book: {
+				Label: {
+					$parentVal: Book
+				}
+			}
+
+			Dagger: {
+				Label: {
+					$parentVal: Dagger
+				}
+			}
+		}
+	}
+}

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 
-namespace terraclasses.Skills.Fighter
+namespace terraclasses1dot4.Skills.Fighter
 {
     public class SwordMastery : SkillBase
     {
@@ -26,7 +26,7 @@ namespace terraclasses.Skills.Fighter
             Rect.X = Rect.Width;
         }
 
-        public override void UpdateStatus(SkillData Data)
+        public override void UpdateStatus()
         {
             Player p = Data.GetCaster;
             ItemTypes Type = ItemMod.GetItemType(p.HeldItem);

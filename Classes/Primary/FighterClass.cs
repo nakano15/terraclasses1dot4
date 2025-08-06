@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace terraclasses.Classes.Primary
+namespace terraclasses1dot4.Classes.Primary
 {
     public class FighterClass : ClassBase
     {

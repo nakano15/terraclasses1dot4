@@ -1,10 +1,10 @@
 using Terraria;
 using Terraria.ModLoader;
-using terraclasses.Interface;
+using terraclasses1dot4.Interface;
 using System.Collections.Generic;
 using Terraria.UI;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class SystemMod : ModSystem
     {

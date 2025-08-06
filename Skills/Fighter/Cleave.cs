@@ -8,7 +8,7 @@ using Terraria.DataStructures;
 using Microsoft.CodeAnalysis;
 using System;
 
-namespace terraclasses.Skills.Fighter
+namespace terraclasses1dot4.Skills.Fighter
 {
     public class Cleave : SkillBase
     {
@@ -25,7 +25,7 @@ namespace terraclasses.Skills.Fighter
         };
         Vector2 Origin = new Vector2(17, 38);
 
-        public override void Update(SkillData Data)
+        public override void Update()
         {
             CleaveData d = Data as CleaveData;
             if (d.IsCleaving)
@@ -35,48 +35,49 @@ namespace terraclasses.Skills.Fighter
                 Rectangle rect = new Rectangle((int)Data.GetCaster.Center.X, (int)Data.GetCaster.Center.Y, (int)(34 * Scale), (int)(34 * Scale));
                 rect.X += (int)(MathF.Sin(d.AttackAngle) * 20) - 17;
                 rect.Y += (int)(MathF.Cos(d.AttackAngle) * 20) - 17;
-                float DamagePercentage = d.GetAttributeLevel(0) * .01f;
+                int Damage = (int)(GetBestDamage(Data.GetCaster, DamageClass.Melee) * (d.GetAttributeLevel(0) * .01f));
+                //You forgot to get melee damage.
                 for (int n = 0; n < 255; n++)
                 {
                     if (n < 200 && Main.npc[n].active && !Main.npc[n].friendly && !Main.npc[n].dontTakeDamage && Main.npc[n].getRect().Intersects(rect))
                     {
-                        d.HurtNpc(Main.npc[n], DamageClass.Melee, DamagePercentage, Data.GetCaster.Center.X < Main.npc[n].Center.X ? 1 : -1, 6f, 30);
+                        d.HurtNpc(Main.npc[n], DamageClass.Melee, Damage, Data.GetCaster.Center.X < Main.npc[n].Center.X ? 1 : -1, 6f, 30);
                     }
                 }
             }
         }
 
-        public override void DrawInFrontOfPlayer(SkillData data, ref PlayerDrawSet drawInfo)
+        public override void DrawInFrontOfPlayer(ref PlayerDrawSet drawInfo)
         {
-            CleaveData d = data as CleaveData;
+            CleaveData d = Data as CleaveData;
             if (d.IsCleaving)
             {
                 Texture2D texture = terraclasses.CleaveEffectTexture.Value;
-                float Scale = data.GetSkillAttributeValue(3) * .01f;
+                float Scale = Data.GetSkillAttributeValue(3) * .01f;
                 DrawData dd = new DrawData(texture, drawInfo.Center - Main.screenPosition, new Rectangle(d.AnimationFrame * 34, 0, 34, 38), Color.White, d.AttackAngle, Origin, Scale, SpriteEffects.None, 0);
                 drawInfo.DrawDataCache.Add(dd);
             }
         }
 
-        public override void ModifyHitByNPC(SkillData data, NPC npc, ref Player.HurtModifiers modifiers)
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
-            if (CanTriggerCleave(data))
+            if (CanTriggerCleave())
             {
-                (data as CleaveData).SpawnCleaveDirection(data.GetCaster.Center, npc.Center);
+                (Data as CleaveData).SpawnCleaveDirection(Data.GetCaster.Center, npc.Center);
             }
         }
 
-        public override void ModifyHitByProjectile(SkillData data, Projectile proj, ref Player.HurtModifiers modifiers)
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
-            if (CanTriggerCleave(data))
+            if (CanTriggerCleave())
             {
-                (data as CleaveData).SpawnCleaveDirection(data.GetCaster.Center, proj.Center);
+                (Data as CleaveData).SpawnCleaveDirection(Data.GetCaster.Center, proj.Center);
             }
         }
 
-        public bool CanTriggerCleave(SkillData data)
+        public bool CanTriggerCleave()
         {
-            return Main.rand.Next(0, 100) < (data as CleaveData).GetSkillAttributeValue(1);
+            return Main.rand.Next(0, 100) < (Data as CleaveData).GetSkillAttributeValue(1);
         }
 
         class CleaveData : SkillData
@@ -101,7 +102,7 @@ namespace terraclasses.Skills.Fighter
             public void SpawnCleaveDirection(Vector2 CasterPosition, Vector2 TargetCenter)
             {
                 if (IsCleaving) return;
-                AttackAngle = (float)Math.Atan2(TargetCenter.Y - CasterPosition.Y, TargetCenter.X - CasterPosition.X);
+                AttackAngle = (float)(Math.Atan2(TargetCenter.Y - CasterPosition.Y, TargetCenter.X - CasterPosition.X) + MathF.PI * .5f);
                 AnimationFrame = 0;
                 IsCleaving = true;
                 AnimationTime = 0;
@@ -164,7 +165,7 @@ namespace terraclasses.Skills.Fighter
 
             public override float Value(int Level)
             {
-                return 20 + 9.2f * Level;
+                return 15f + 4.2f * Level;
             }
         }
     }

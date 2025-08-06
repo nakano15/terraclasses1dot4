@@ -1,7 +1,7 @@
 using Terraria.ModLoader;
 using System.Collections.Generic;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class SkillContainer
     {

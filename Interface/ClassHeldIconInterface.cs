@@ -10,7 +10,7 @@ using ReLogic.Graphics;
 using nterrautils;
 using Microsoft.CodeAnalysis.Text;
 
-namespace terraclasses.Interface
+namespace terraclasses1dot4.Interface
 {
     public class ClassHeldIconInterface : LegacyGameInterfaceLayer
     {

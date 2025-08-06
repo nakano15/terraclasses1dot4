@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace terraclasses.Classes.Starter
+namespace terraclasses1dot4.Classes.Starter
 {
     public class TerrarianClass : ClassBase
     {

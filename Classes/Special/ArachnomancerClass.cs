@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace terraclasses.Classes.Special
+namespace terraclasses1dot4.Classes.Special
 {
     public class ArachnomancerClass : ClassBase
     {

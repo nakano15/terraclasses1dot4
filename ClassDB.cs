@@ -1,9 +1,9 @@
-using terraclasses.Classes.Starter;
-using terraclasses.Classes.Aspect;
-using terraclasses.Classes.Primary;
-using terraclasses.Classes.Special;
+using terraclasses1dot4.Classes.Starter;
+using terraclasses1dot4.Classes.Aspect;
+using terraclasses1dot4.Classes.Primary;
+using terraclasses1dot4.Classes.Special;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class ClassDB : ClassContainer
     {

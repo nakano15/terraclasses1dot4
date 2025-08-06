@@ -5,10 +5,13 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class SkillBase
     {
+        protected static SkillData _Data;
+        public static SkillData Data => _Data;
+
         public virtual string Name => "Unknown";
         public virtual string Description => "";
         public virtual SkillTypes SkillType => SkillTypes.Passive;
@@ -37,103 +40,110 @@ namespace terraclasses
             _Attributes = SetSkillAttributes;
         }
 
+        #region Skill Data setting related
+        internal static void ChangeSkillData(SkillData New)
+        {
+            _Data = New;
+        }
+        #endregion
+
         #region Skill Functions
-        public virtual void OnStartUse(SkillData Data)
+        public virtual void OnStartUse()
         {
 
         }
 
-        public virtual void Update(SkillData Data)
+        public virtual void Update()
         {
 
         }
 
-        public virtual void OnStepChange(SkillData Data)
+        public virtual void OnStepChange()
         {
 
         }
 
-        public virtual void OnEndUse(SkillData Data, bool Abrupt)
-        {
-            
-        }
-
-        public virtual void UpdateAnimation(SkillData Data)
+        public virtual void OnEndUse(bool Abrupt)
         {
 
         }
 
-        public virtual void UpdateStatus(SkillData Data)
+        public virtual void UpdateAnimation()
         {
 
         }
 
-        public virtual void UpdateItemUse(SkillData Data, bool JustUsed)
+        public virtual void UpdateStatus()
         {
 
         }
 
-        public virtual bool BeforeShooting(SkillData Data, Item weapon, ref int type, ref int damage, ref float knockback, ref Microsoft.Xna.Framework.Vector2 Position, ref Microsoft.Xna.Framework.Vector2 Velocity)
+        public virtual void UpdateItemUse(bool JustUsed)
+        {
+
+        }
+
+        public virtual bool BeforeShooting(Item weapon, ref int type, ref int damage, ref float knockback, ref Microsoft.Xna.Framework.Vector2 Position, ref Microsoft.Xna.Framework.Vector2 Velocity)
         {
             return true;
         }
 
-        public virtual void OnHitNPC(SkillData Data, NPC target, NPC.HitInfo hit, int damageDone)
+        public virtual void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 
         }
 
-        public virtual void OnHitNPCWithProj(SkillData data, Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        public virtual void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
 
         }
 
-        public virtual void OnHitByNPC(SkillData data, NPC npc, Player.HurtInfo hurtInfo)
+        public virtual void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
 
         }
 
-        public virtual void OnHitByProjectile(SkillData data, Projectile proj, Player.HurtInfo hurtInfo)
+        public virtual void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
 
         }
 
-        public virtual void ModifyHitNPC(SkillData data, NPC target, ref NPC.HitModifiers modifiers)
+        public virtual void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
 
         }
 
-        public virtual void ModifyHitNPCWithItem(SkillData data, Item item, NPC target, ref NPC.HitModifiers modifiers)
+        public virtual void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
 
         }
 
-        public virtual void ModifyHitNPCWithProj(SkillData data, Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
+        public virtual void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
 
         }
 
-        public virtual void ModifyHitByNPC(SkillData data, NPC npc, ref Player.HurtModifiers modifiers)
+        public virtual void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
 
         }
 
-        public virtual void ModifyHitByProjectile(SkillData data, Projectile proj, ref Player.HurtModifiers modifiers)
+        public virtual void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
 
         }
 
-        public virtual void DrawBehindPlayer(SkillData data, ref PlayerDrawSet drawInfo)
+        public virtual void DrawBehindPlayer(ref PlayerDrawSet drawInfo)
         {
 
         }
 
-        public virtual void DrawInFrontOfPlayer(SkillData data, ref PlayerDrawSet drawInfo)
+        public virtual void DrawInFrontOfPlayer(ref PlayerDrawSet drawInfo)
         {
 
         }
 
-        public virtual void DrawInFrontOfEverything(SkillData data)
+        public virtual void DrawInFrontOfEverything()
         {
 
         }
@@ -163,6 +173,21 @@ namespace terraclasses
         public Texture2D GetGoreTexture(int ID)
         {
             return TextureAssets.Gore[ID].Value;
+        }
+
+        public int GetBestDamage(Player player, DamageClass damageClass)
+        {
+            int HighestDamage = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (player.inventory[i].type > 0 && player.inventory[i].CountsAsClass(damageClass))
+                {
+                    int Damage = (int)(player.inventory[i].damage * (60f / player.inventory[i].useTime));
+                    if (Damage > HighestDamage)
+                        HighestDamage = Damage;
+                }
+            }
+            return HighestDamage;
         }
         #endregion
     }

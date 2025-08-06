@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using System.Collections.ObjectModel;
+using Terraria.DataStructures;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class SkillData
     {
@@ -99,6 +100,7 @@ namespace terraclasses
             Caster = player;
             if (SkillType != SkillTypes.Active && SkillType != SkillTypes.Toggle)
                 return;
+            SkillBase.ChangeSkillData(this);
             if (SkillType == SkillTypes.Toggle && Active)
             {
                 EndUse();
@@ -110,7 +112,8 @@ namespace terraclasses
             PlayerDamageCooldown.Clear();
             NpcInteraction.Clear();
             PlayerInteraction.Clear();
-            Base.OnStartUse(this);
+            Base.OnStartUse();
+            SkillBase.ChangeSkillData(null);
             Active = true;
         }
 
@@ -118,7 +121,9 @@ namespace terraclasses
         {
             SkillTypes SkillType = Base.SkillType;
             if (SkillType == SkillTypes.Passive || SkillType == SkillTypes.Combat) return;
-            Base.OnEndUse(this, false);
+            SkillBase.ChangeSkillData(this);
+            Base.OnEndUse(false);
+            SkillBase.ChangeSkillData(null);
             Active = false;
         }
 
@@ -127,26 +132,143 @@ namespace terraclasses
             bool SetActive = IsUnlocked;
             if (SetActive != Active)
             {
-                if(!Active)
+                SkillBase.ChangeSkillData(this);
+                if (!Active)
                 {
                     Caster = player;
-                    Base.OnStartUse(this);
+                    Base.OnStartUse();
                 }
                 else
                 {
-                    Base.OnEndUse(this, true);
+                    Base.OnEndUse(true);
                 }
+                SkillBase.ChangeSkillData(null);
             }
             Active = SetActive;
+        }
+
+        internal void UpdateAnimation()
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.UpdateAnimation();
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void UpdateStatus()
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.UpdateStatus();
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void UpdateItemUse(bool JustUsed)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.UpdateItemUse(JustUsed);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal bool BeforeShooting(Item weapon, ref int type, ref int damage, ref float knockback, ref Microsoft.Xna.Framework.Vector2 Position, ref Microsoft.Xna.Framework.Vector2 Velocity)
+        {
+            SkillBase.ChangeSkillData(this);
+            bool Shoot = Base.BeforeShooting(weapon, ref type, ref damage, ref knockback, ref Position, ref Velocity);
+            SkillBase.ChangeSkillData(null);
+            return Shoot;
+        }
+
+        internal void OnHitNpc(NPC Target, NPC.HitInfo Hit, int DamageDone)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.OnHitNPC(Target, Hit, DamageDone);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.OnHitNPCWithProj(proj, target, hit, damageDone);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.OnHitByNPC(npc, hurtInfo);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.OnHitByProjectile(proj, hurtInfo);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.ModifyHitNPC(target, ref modifiers);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.ModifyHitNPCWithItem(item, target, ref modifiers);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.ModifyHitNPCWithProj(proj, target, ref modifiers);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.ModifyHitByNPC(npc, ref modifiers);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.ModifyHitByProjectile(proj, ref modifiers);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void DrawBehindPlayer(ref PlayerDrawSet drawInfo)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.DrawBehindPlayer(ref drawInfo);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void DrawInFrontOfPlayer(ref PlayerDrawSet drawInfo)
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.DrawInFrontOfPlayer(ref drawInfo);
+            SkillBase.ChangeSkillData(null);
+        }
+
+        internal void DrawInFrontOfEverything()
+        {
+            SkillBase.ChangeSkillData(this);
+            Base.DrawInFrontOfEverything();
+            SkillBase.ChangeSkillData(null);
         }
 
         public void UpdateSkill(Player player)
         {
             if (Active)
             {
-                Base.Update(this);
+                SkillBase.ChangeSkillData(this);
+                Base.Update();
                 Time++;
                 UpdateCooldowns();
+                SkillBase.ChangeSkillData(null);
             }
         }
 
@@ -188,7 +310,9 @@ namespace terraclasses
         {
             Step = NewStepID;
             StepStartTime = Time + 1;
-            Base.OnStepChange(this);
+            SkillBase.ChangeSkillData(this);
+            Base.OnStepChange();
+            SkillBase.ChangeSkillData(null);
         }
 
         public int HurtPlayer(Player player, DamageClass damageClass, float damagePercentage, int DamageDirection, int Cooldown = 8, bool Critical = false, bool CountDefense = true, string DeathReason = "was slain by [caster] ability.")

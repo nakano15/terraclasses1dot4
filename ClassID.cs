@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Terraria.ModLoader;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public struct ClassID
     {

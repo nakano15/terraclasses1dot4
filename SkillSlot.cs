@@ -1,6 +1,6 @@
 using System;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public struct SkillSlot
     {

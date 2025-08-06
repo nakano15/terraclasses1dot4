@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace terraclasses.Classes.Aspect
+namespace terraclasses1dot4.Classes.Aspect
 {
     public class CerberusClass : ClassBase
     {

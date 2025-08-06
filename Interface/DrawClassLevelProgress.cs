@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using ReLogic.Graphics;
 using nterrautils;
 
-namespace terraclasses.Interface
+namespace terraclasses1dot4.Interface
 {
     public class DrawClassLevelProgress : LegacyGameInterfaceLayer
     {

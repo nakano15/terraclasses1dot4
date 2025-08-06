@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria.ModLoader;
 
-namespace terraclasses.Interface
+namespace terraclasses1dot4.Interface
 {
     public class DrawSkillEffectOnScreen : LegacyGameInterfaceLayer
     {
@@ -24,7 +24,7 @@ namespace terraclasses.Interface
                 {
                     foreach (SkillData sd in Main.player[p].GetModPlayer<PlayerMod>().GetActiveSkills)
                     {
-                        sd.Base.DrawInFrontOfEverything(sd);
+                        sd.DrawInFrontOfEverything();
                     }
                 }
             }

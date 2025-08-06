@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class ClassBase
     {

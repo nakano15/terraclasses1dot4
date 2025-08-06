@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace terraclasses.Classes.Aspect
+namespace terraclasses1dot4.Classes.Aspect
 {
     public class KnightClass : ClassBase
     {

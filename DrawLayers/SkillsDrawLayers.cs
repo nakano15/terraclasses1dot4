@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 
-namespace terraclasses.DrawLayers
+namespace terraclasses1dot4.DrawLayers
 {
     public class SkillDrawLayers
     {
@@ -21,7 +21,7 @@ namespace terraclasses.DrawLayers
             {
                 foreach (SkillData sd in drawInfo.drawPlayer.GetModPlayer<PlayerMod>().GetActiveSkills)
                 {
-                    sd.Base.DrawBehindPlayer(sd, ref drawInfo);
+                    sd.DrawBehindPlayer(ref drawInfo);
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace terraclasses.DrawLayers
             {
                 foreach (SkillData sd in drawInfo.drawPlayer.GetModPlayer<PlayerMod>().GetActiveSkills)
                 {
-                    sd.Base.DrawInFrontOfPlayer(sd, ref drawInfo);
+                    sd.DrawInFrontOfPlayer(ref drawInfo);
                 }
             }
         }

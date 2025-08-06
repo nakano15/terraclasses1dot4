@@ -5,7 +5,7 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using System;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class PlayerMod : ModPlayer
     {
@@ -92,7 +92,7 @@ namespace terraclasses
             }
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.UpdateStatus(sd);
+                sd.UpdateStatus();
             }
         }
 
@@ -168,7 +168,7 @@ namespace terraclasses
             bool AllowFiring = true;
             foreach (SkillData sd in ActiveSkills)
             {
-                if (!sd.Base.BeforeShooting(sd, item, ref type, ref damage, ref knockback, ref position, ref velocity))
+                if (!sd.BeforeShooting(item, ref type, ref damage, ref knockback, ref position, ref velocity))
                 {
                     AllowFiring = false;
                 }
@@ -181,7 +181,7 @@ namespace terraclasses
             bool JustUsed = Player.itemAnimation > 0 && Player.itemAnimation == Player.itemAnimationMax - 1;
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.UpdateItemUse(sd, JustUsed);
+                sd.UpdateItemUse(JustUsed);
             }
         }
 
@@ -189,7 +189,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.UpdateAnimation(sd);
+                sd.UpdateAnimation();
             }
             ClassData cd = GetClassDataOrNull(ClassDB.Cerberus);
             {
@@ -204,7 +204,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.OnHitByNPC(sd, npc, hurtInfo);
+                sd.OnHitByNPC(npc, hurtInfo);
             }
         }
 
@@ -212,7 +212,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.OnHitByProjectile(sd, proj, hurtInfo);
+                sd.OnHitByProjectile(proj, hurtInfo);
             }
         }
 
@@ -220,7 +220,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.OnHitNPC(sd, target, hit, damageDone);
+                sd.OnHitNpc(target, hit, damageDone);
             }
         }
 
@@ -228,7 +228,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.OnHitNPCWithProj(sd, proj, target, hit, damageDone);
+                sd.OnHitNPCWithProj(proj, target, hit, damageDone);
             }
         }
 
@@ -236,7 +236,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.ModifyHitNPC(sd, target, ref modifiers);
+                sd.ModifyHitNPC(target, ref modifiers);
             }
         }
 
@@ -244,7 +244,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.ModifyHitNPCWithItem(sd, item, target, ref modifiers);
+                sd.ModifyHitNPCWithItem(item, target, ref modifiers);
             }
         }
 
@@ -252,7 +252,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.ModifyHitNPCWithProj(sd, proj, target, ref modifiers);
+                sd.ModifyHitNPCWithProj(proj, target, ref modifiers);
             }
         }
 
@@ -260,7 +260,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.ModifyHitByNPC(sd, npc, ref modifiers);
+                sd.ModifyHitByNPC(npc, ref modifiers);
             }
         }
 
@@ -268,7 +268,7 @@ namespace terraclasses
         {
             foreach (SkillData sd in ActiveSkills)
             {
-                sd.Base.ModifyHitByProjectile(sd, proj, ref modifiers);
+                sd.ModifyHitByProjectile(proj, ref modifiers);
             }
         }
 

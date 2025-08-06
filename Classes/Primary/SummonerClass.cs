@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace terraclasses.Classes.Primary
+namespace terraclasses1dot4.Classes.Primary
 {
     public class SummonerClass : ClassBase
     {

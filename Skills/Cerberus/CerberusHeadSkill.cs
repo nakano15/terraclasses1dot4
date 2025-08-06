@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace terraclasses.Skills.Cerberus
+namespace terraclasses1dot4.Skills.Cerberus
 {
     public class CerberusHeadSkill : SkillBase
     {
@@ -23,7 +23,7 @@ namespace terraclasses.Skills.Cerberus
         };
         public override SkillData GetSkillData => new CerberusBiteData();
 
-        public override void Update(SkillData Data)
+        public override void Update()
         {
             CerberusBiteData data = (CerberusBiteData) Data;
             for (int h = 0; h < data.Heads.Count; h++)
@@ -65,19 +65,19 @@ namespace terraclasses.Skills.Cerberus
             }
         }
 
-        public override void OnHitNPC(SkillData Data, NPC target, NPC.HitInfo hit, int damageDone)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            TrySpawningOnNPC(Data, target);
+            TrySpawningOnNPC(target);
         }
 
-        public override void OnHitNPCWithProj(SkillData data, Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            TrySpawningOnNPC(data, target);
+            TrySpawningOnNPC(target);
         }
 
-        void TrySpawningOnNPC(SkillData Skill, NPC TargetNpc)
+        void TrySpawningOnNPC(NPC TargetNpc)
         {
-            CerberusBiteData data = (CerberusBiteData)Skill;
+            CerberusBiteData data = (CerberusBiteData)Data;
             Vector2 Position = TargetNpc.Center + TargetNpc.velocity * 5;
             if (Main.rand.NextFloat() < (1f - data.Heads.Count * 0.334f) * 0.1f && CanCreateHead(Position, data))
             {
@@ -96,7 +96,7 @@ namespace terraclasses.Skills.Cerberus
             return true;
         }
 
-        public override void DrawBehindPlayer(SkillData Data, ref PlayerDrawSet drawInfo)
+        public override void DrawBehindPlayer(ref PlayerDrawSet drawInfo)
         {
             CerberusBiteData data = (CerberusBiteData)Data;
             int PosSum = 0;

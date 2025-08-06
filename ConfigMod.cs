@@ -4,7 +4,7 @@ using Terraria.ModLoader.Config;
 using System.Collections.Generic;
 using Terraria.Localization;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     class ConfigMod : ModConfig
     {

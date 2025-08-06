@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
     public class ClassData
     {
@@ -47,7 +47,7 @@ namespace terraclasses
             {
                 for (int s = 0; s < Skills.Length; s++)
                 {
-                    Skills[s].Base.OnEndUse(Skills[s], true);
+                    Skills[s].Base.OnEndUse(true);
                     Skills[s] = null;
                 }
             }

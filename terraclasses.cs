@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
 
-namespace terraclasses
+namespace terraclasses1dot4
 {
 	public class terraclasses : Mod
 	{
@@ -46,18 +46,18 @@ namespace terraclasses
 			//
 			if (!Main.dedServ)
 			{
-				ClassIconSlotTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/ClassIconSlot");
-				SkillQuickslotTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/SkillQuickSlot");
-				ClassIconsTexture = ModContent.Request<Texture2D>("terraclasses/Content/ClassIcons");
-				SkillIconsTexture = ModContent.Request<Texture2D>("terraclasses/Content/SkillIcons");
-				CastBarTexture = ModContent.Request<Texture2D>("terraclasses/Content/CastBar");
-				MagicCircleTexture = ModContent.Request<Texture2D>("terraclasses/Content/MagicCircle");
-				CerberusTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/cerberus");
-				CerberusHeadTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/CerberusBiteHead");
-				CleaveEffectTexture = ModContent.Request<Texture2D>("terraclasses/Content/Effects/CleaveAnimation");
-				ExpBarTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/LevelArrow");
-				SkillUpButtonTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/SkillUpArrowButton");
-				SkillIconPlusButtonTexture = ModContent.Request<Texture2D>("terraclasses/Content/Interface/PlusButton");
+				ClassIconSlotTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Interface/ClassIconSlot");
+				SkillQuickslotTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Interface/SkillQuickSlot");
+				ClassIconsTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/ClassIcons");
+				SkillIconsTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/SkillIcons");
+				CastBarTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/CastBar");
+				MagicCircleTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/MagicCircle");
+				CerberusTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Effects/cerberus");
+				CerberusHeadTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Effects/CerberusBiteHead");
+				CleaveEffectTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Effects/CleaveAnimation");
+				ExpBarTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Interface/LevelArrow");
+				SkillUpButtonTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Interface/SkillUpArrowButton");
+				SkillIconPlusButtonTexture = ModContent.Request<Texture2D>("terraclasses1dot4/Content/Interface/PlusButton");
 				SkillSlot = new ModKeybind[4];
 				SkillSlot[0] = KeybindLoader.RegisterKeybind(this, "Skill Slot 1", "Q");
 				SkillSlot[1] = KeybindLoader.RegisterKeybind(this, "Skill Slot 2", "Z");
