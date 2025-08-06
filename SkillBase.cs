@@ -20,6 +20,7 @@ namespace terraclasses1dot4
         public SkillAttribute[] GetSkillAttributes => _Attributes;
         public virtual SkillData GetSkillData => new SkillData();
         public virtual bool EffectiveAtLevel0 => false;
+        public virtual int Cooldown => 0;
         bool _Invalid;
         public bool IsInvalid => _Invalid;
 
@@ -40,7 +41,7 @@ namespace terraclasses1dot4
             _Attributes = SetSkillAttributes;
         }
 
-        #region Skill Data setting related
+        #region Skill Data related
         internal static void ChangeSkillData(SkillData New)
         {
             _Data = New;
@@ -150,7 +151,11 @@ namespace terraclasses1dot4
         #endregion
 
         #region Handy Methods
-        public int GetTime(int Seconds, int Minutes = 0, int Hours = 0)
+        public int GetTime => _Data.GetTime;
+
+        public int GetTotalTime => _Data.GetTotalTime;
+
+        public int GetFrameFromTime(int Seconds, int Minutes = 0, int Hours = 0)
         {
             return Seconds * 60 + Minutes * 3600 + Hours * 216000;
         }
@@ -189,6 +194,23 @@ namespace terraclasses1dot4
             }
             return HighestDamage;
         }
+
+        protected float GetAttributeValue(byte AttributeIndex)
+        {
+            return _Data.GetSkillAttributeValue(AttributeIndex);
+        }
+
+        protected float GetAttributeLevel(byte AttributeIndex)
+        {
+            return _Data.GetAttributeLevel(AttributeIndex);
+        }
+
+        protected void EndUse()
+        {
+            _Data.EndUse();
+        }
+
+        protected Player GetCaster => _Data.GetCaster;
         #endregion
     }
 }

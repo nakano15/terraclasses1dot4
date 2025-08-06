@@ -41,16 +41,18 @@ namespace terraclasses1dot4
 
         public override void PreUpdate()
         {
-            UpdateActiveSkillsList();
+            UpdateSkillsList();
         }
 
-        void UpdateActiveSkillsList()
+        void UpdateSkillsList()
         {
             ActiveSkills.Clear();
             foreach (ClassData cd in Classes)
             {
                 if (cd.IsUnlocked)
+                {
                     cd.TakeActiveSkills(ActiveSkills, Player);
+                }
             }
         }
 
@@ -273,6 +275,16 @@ namespace terraclasses1dot4
         }
 
         public override void PostUpdate()
+        {
+            UpdateSkills();
+        }
+
+        public override void UpdateDead()
+        {
+            UpdateSkills();
+        }
+
+        void UpdateSkills()
         {
             foreach (SkillData sd in ActiveSkills)
             {

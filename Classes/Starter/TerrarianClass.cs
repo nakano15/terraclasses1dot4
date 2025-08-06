@@ -11,7 +11,8 @@ namespace terraclasses1dot4.Classes.Starter
         public override byte MaxLevel => 10;
         protected override SkillUnlockInfo[] SetSkills => new SkillUnlockInfo[]
         {
-            
+            new SkillUnlockInfo(SkillDB.FirstAid),
+            new SkillUnlockInfo(SkillDB.ThrowRock)
         };
 
         public override void GetClassIcon(out Texture2D Texture, out Rectangle Rect)

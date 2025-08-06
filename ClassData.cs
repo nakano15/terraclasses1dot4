@@ -99,6 +99,8 @@ namespace terraclasses1dot4
                     }
                     if (sd.IsActive)
                         Skills.Add(sd);
+                    else if (sd.GetCooldown > 0)
+                        sd.UpdateSkillCooldown();
                 }
             }
         }

@@ -27,6 +27,7 @@ namespace terraclasses1dot4
         public uint GetID => ID;
         public string GetModID => ModID;
         int[] AttributeLevels = new int[0];
+        int Cooldown = 0;
         bool Active = false;
         byte Step = 0;
         int Time = int.MinValue, StepStartTime = int.MinValue;
@@ -47,10 +48,11 @@ namespace terraclasses1dot4
         public bool IsActive => Active;
         public bool IsUnlocked => Unlocked;
         public byte GetStep => Step;
-        public int GetStepTime => Time - StepStartTime;
-        public int GetTime => Time;
-        public bool StepStart => GetTime == StepStartTime;
+        public int GetTotalTime => Time;
+        public int GetTime => Time - StepStartTime;
+        public bool StepStart => GetTotalTime == StepStartTime;
         public Player GetCaster => Caster;
+        public int GetCooldown => Cooldown;
         
         Dictionary<int, int> NpcDamageCooldown = new Dictionary<int, int>(),
             PlayerDamageCooldown = new Dictionary<int, int>();
@@ -95,11 +97,11 @@ namespace terraclasses1dot4
 
         public void UseSkill(Player player)
         {
-            if(!CheckIfSkillUnlocked) return;
+            if (!CheckIfSkillUnlocked || Cooldown > 0) return;
             SkillTypes SkillType = Base.SkillType;
-            Caster = player;
             if (SkillType != SkillTypes.Active && SkillType != SkillTypes.Toggle)
                 return;
+            Caster = player;
             SkillBase.ChangeSkillData(this);
             if (SkillType == SkillTypes.Toggle && Active)
             {
@@ -115,6 +117,7 @@ namespace terraclasses1dot4
             Base.OnStartUse();
             SkillBase.ChangeSkillData(null);
             Active = true;
+            player.chatOverhead.NewMessage(Base.Name + "!!!", 150);
         }
 
         public void EndUse(bool DoCooldown = true)
@@ -125,6 +128,7 @@ namespace terraclasses1dot4
             Base.OnEndUse(false);
             SkillBase.ChangeSkillData(null);
             Active = false;
+            Cooldown = Base.Cooldown;
         }
 
         internal void UpdatePassiveSkill(Player player)
@@ -270,6 +274,11 @@ namespace terraclasses1dot4
                 UpdateCooldowns();
                 SkillBase.ChangeSkillData(null);
             }
+        }
+
+        public void UpdateSkillCooldown()
+        {
+            if (!Active && Cooldown > 0) Cooldown--;
         }
 
         void UpdateCooldowns()

@@ -23,9 +23,9 @@ namespace terraclasses1dot4.Skills.Fighter
 
         public override void Update()
         {
-            if (Data.GetTime >= Data.GetSkillAttributeValue(2))
+            if (GetTime >= Data.GetSkillAttributeValue(2))
             {
-                Data.EndUse();
+                EndUse();
             }
         }
 

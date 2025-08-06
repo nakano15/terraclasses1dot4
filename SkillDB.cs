@@ -8,8 +8,10 @@ namespace terraclasses1dot4
             CerberusHead = 2,
             SwordMastery = 3,
             Endure = 4,
-            Cleave = 5;
-            
+            Cleave = 5,
+            FirstAid = 6,
+            ThrowRock = 7;
+
         protected override void LoadSkills()
         {
             AddSkill(CerberusForm, new Skills.Cerberus.CerberusFormSkill());
@@ -17,6 +19,8 @@ namespace terraclasses1dot4
             AddSkill(SwordMastery, new Skills.Fighter.SwordMastery());
             AddSkill(Endure, new Skills.Fighter.Endure());
             AddSkill(Cleave, new Skills.Fighter.Cleave());
+            AddSkill(FirstAid, new Skills.Terrarian.FirstAid());
+            AddSkill(ThrowRock, new Skills.Terrarian.ThrowRock());
         }
     }
 }

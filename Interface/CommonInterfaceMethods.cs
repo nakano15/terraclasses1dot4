@@ -8,11 +8,14 @@ using System.Collections.Generic;
 using Terraria.ModLoader;
 using ReLogic.Graphics;
 using nterrautils;
+using System;
 
 namespace terraclasses1dot4.Interface
 {
     public class CommonInterfaceMethods
     {
+        static readonly Color SkillCooldownEffectColor = Color.Gray * .7f;
+
         public static bool IsMouseOverIcon(Vector2 Position)
         {
             const float MinGap = 4f, MaxGap = 52f;
@@ -129,6 +132,17 @@ namespace terraclasses1dot4.Interface
                 }
                 Scale = 32f / Scale;
                 Main.spriteBatch.Draw(Icon, Position, rect, color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+                if (Skill.GetCooldown > 0)
+                {
+                    float Percentage = (float)Skill.GetCooldown / Skill.Base.Cooldown;
+                    Rectangle NewRect = new Rectangle((int)Position.X, (int)(Position.Y + (1f - Percentage) * 32), 32, (int)(Percentage * 32));
+                    Main.spriteBatch.Draw(TextureAssets.BlackTile.Value, NewRect, SkillCooldownEffectColor);
+                    float Cooldown = Skill.GetCooldown * (1f / 60);
+                    if (Cooldown > 0f)
+                        Utils.DrawBorderString(Main.spriteBatch, Math.Round(Cooldown, 0) + "s", Position + Vector2.One * 16f, Color.White, .8f, .5f, .5f);
+                    else
+                        Utils.DrawBorderString(Main.spriteBatch, Math.Round(Cooldown, 1) + "s", Position + Vector2.One * 16f, Color.White, .8f, .5f, .5f);
+                }
             }
             if (QuickSlotKey != "")
             {
