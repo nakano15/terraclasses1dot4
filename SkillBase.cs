@@ -180,14 +180,14 @@ namespace terraclasses1dot4
             return TextureAssets.Gore[ID].Value;
         }
 
-        public int GetBestDamage(Player player, DamageClass damageClass)
+        public int GetBestDamage(Player player, DamageClass damageClass, float DamagePercentage = 1f)
         {
             int HighestDamage = 0;
             for (int i = 0; i < 10; i++)
             {
                 if (player.inventory[i].type > 0 && player.inventory[i].CountsAsClass(damageClass))
                 {
-                    int Damage = (int)(player.inventory[i].damage * (60f / player.inventory[i].useTime));
+                    int Damage = (int)(player.inventory[i].damage * (60f / player.inventory[i].useTime) * DamagePercentage);
                     if (Damage > HighestDamage)
                         HighestDamage = Damage;
                 }
