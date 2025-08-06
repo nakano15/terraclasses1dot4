@@ -329,6 +329,7 @@ namespace terraclasses1dot4.Interface
                         ClassData cd = player.GetModPlayer<PlayerMod>().GetClasses[ClassIndex];
                         cd.ChangeClass(NewClasses[NewClassSelected].ID, NewClasses[NewClassSelected].ModID);
                         Main.NewText("Class ["+cd.Name+"] acquired!");
+                        SelectedClass = ClassIndex;
                         OnSelectClass(cd);
                     }
                 }

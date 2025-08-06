@@ -62,6 +62,8 @@ namespace terraclasses1dot4
                 Skills[i].ChangeSkillIDs(skills[i].GetID, skills[i].GetModID);
                 Skills[i].SetSkillInfosBasedOnUnlockInfo(skills[i]);
             }
+            Level = 0;
+            Exp = 0;
             Unlocked = true;
             UpdateMaxExp();
         }
