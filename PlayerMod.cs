@@ -18,6 +18,7 @@ namespace terraclasses1dot4
         SkillSlot[] ActiveSkillSlots = new SkillSlot[0];
         SkillSlot CombatSkillSlot = new SkillSlot();
         public const int MaxActiveSkillSlots = 4;
+        public float CastBarPercentage = 0f;
 
         internal ClassData[] GetClasses => Classes;
 
@@ -41,6 +42,7 @@ namespace terraclasses1dot4
 
         public override void PreUpdate()
         {
+            CastBarPercentage = 0f;
             UpdateSkillsList();
         }
 
@@ -56,11 +58,16 @@ namespace terraclasses1dot4
             }
         }
 
+        public void SetCastTime(float Value, float MaxValue)
+        {
+            CastBarPercentage = Value / MaxValue;
+        }
+
         public override void OnEnterWorld()
         {
             foreach (ClassData cd in Classes)
             {
-                foreach(SkillData sd in cd.GetSkills)
+                foreach (SkillData sd in cd.GetSkills)
                 {
                     sd.UpdateSkillUnlockedState();
                 }

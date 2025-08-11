@@ -132,9 +132,14 @@ namespace terraclasses1dot4.Interface
                 }
                 Scale = 32f / Scale;
                 Main.spriteBatch.Draw(Icon, Position, rect, color, 0f, Vector2.Zero, Scale, SpriteEffects.None, 0f);
-                if (Skill.GetCooldown > 0)
+                if (Skill.IsActive)
                 {
-                    float Percentage = (float)Skill.GetCooldown / Skill.Base.Cooldown;
+                    Rectangle NewRect = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
+                    Main.spriteBatch.Draw(TextureAssets.BlackTile.Value, NewRect, SkillCooldownEffectColor);
+                }
+                else if (Skill.GetCooldown > 0)
+                {
+                    float Percentage = (float)Skill.GetCooldown / Skill.GetSkillCooldown();
                     Rectangle NewRect = new Rectangle((int)Position.X, (int)(Position.Y + (1f - Percentage) * 32), 32, (int)(Percentage * 32));
                     Main.spriteBatch.Draw(TextureAssets.BlackTile.Value, NewRect, SkillCooldownEffectColor);
                     float Cooldown = Skill.GetCooldown * (1f / 60);

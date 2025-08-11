@@ -10,7 +10,9 @@ namespace terraclasses1dot4
             Endure = 4,
             Cleave = 5,
             FirstAid = 6,
-            ThrowRock = 7;
+            ThrowRock = 7,
+            Fireball = 8,
+            MagicMastery = 9;
 
         protected override void LoadSkills()
         {
@@ -21,6 +23,8 @@ namespace terraclasses1dot4
             AddSkill(Cleave, new Skills.Fighter.Cleave());
             AddSkill(FirstAid, new Skills.Terrarian.FirstAid());
             AddSkill(ThrowRock, new Skills.Terrarian.ThrowRock());
+            AddSkill(Fireball, new Skills.Mage.Fireball());
+            AddSkill(MagicMastery, new Skills.Mage.MagicMastery());
         }
     }
 }

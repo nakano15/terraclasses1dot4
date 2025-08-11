@@ -11,7 +11,7 @@ namespace terraclasses1dot4.Skills.Fighter
     public class SwordMastery : SkillBase
     {
         public override string Name => "Sword Mastery";
-        public override string Description => "Improves your performance when using Sword and Dagger type weapons.";
+        public override string Description => "Makes you better when using Sword and Dagger type weapons.";
         public override SkillTypes SkillType => SkillTypes.Passive;
         protected override SkillAttribute[] SetSkillAttributes => new SkillAttribute[]
         {

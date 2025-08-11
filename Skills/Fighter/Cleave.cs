@@ -83,7 +83,7 @@ namespace terraclasses1dot4.Skills.Fighter
         class CleaveData : SkillData
         {
             public int AnimationTime = 0;
-            public const int MaxAnimationTime = 28;
+            public const int MaxAnimationTime = 14;
             public const float AttackDuration = 0.25f;
             public int AnimationFrame = 0;
             public bool IsCleaving = false;

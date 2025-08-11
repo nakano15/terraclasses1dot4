@@ -42,6 +42,7 @@ namespace terraclasses1dot4
 			//
 			StarterClasses.Add(new ClassID(ClassDB.Terrarian, this));
 			StarterClasses.Add(new ClassID(ClassDB.Fighter, this));
+			StarterClasses.Add(new ClassID(ClassDB.Mage, this));
 			UnlockedClasses.Add(new ClassID(ClassDB.Cerberus, this));
 			//
 			if (!Main.dedServ)

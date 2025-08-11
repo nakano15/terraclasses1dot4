@@ -18,9 +18,10 @@ namespace terraclasses1dot4.Skills.Terrarian
         protected override SkillAttribute[] SetSkillAttributes => new SkillAttribute[]
         {
             new DamageAttribute(),
-            new ExtraRocksAttribute()
+            new ExtraRocksAttribute(),
+            new Cooldown()
         };
-        public override int Cooldown => GetFrameFromTime(10);
+        public override byte CooldownAttributeIndex => 2;
 
         public override void Update()
         {
@@ -74,6 +75,20 @@ namespace terraclasses1dot4.Skills.Terrarian
             public override float Value(int Level)
             {
                 return 1 + Level;
+            }
+        }
+
+        class Cooldown : SkillAttribute
+        {
+            public override string Name => "Cooldown";
+            public override string AttributeDescription(int Level)
+            {
+                return "Cooldown: " + Value(Level) + " seconds.";
+            }
+            public override int MaxLevel => 0;
+            public override float Value(int Level)
+            {
+                return .2f;
             }
         }
     }

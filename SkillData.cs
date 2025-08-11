@@ -28,6 +28,7 @@ namespace terraclasses1dot4
         public string GetModID => ModID;
         int[] AttributeLevels = new int[0];
         int Cooldown = 0;
+        int CastTime = 0, MaxCastTime = 0;
         bool Active = false;
         byte Step = 0;
         int Time = int.MinValue, StepStartTime = int.MinValue;
@@ -58,6 +59,27 @@ namespace terraclasses1dot4
             PlayerDamageCooldown = new Dictionary<int, int>();
         List<int> NpcInteraction = new List<int>(),
             PlayerInteraction = new List<int>();
+
+        public int GetManaCost(Player player)
+        {
+            if (Base.ManaCostAttributeIndex < Base.GetSkillAttributes.Length)
+                return (int)GetSkillAttributeValue(Base.ManaCostAttributeIndex);
+            return 0;
+        }
+
+        public int GetSkillCooldown()
+        {
+            if (Base.CooldownAttributeIndex < Base.GetSkillAttributes.Length)
+                return (int)(GetSkillAttributeValue(Base.CooldownAttributeIndex) * 60);
+            return 0;
+        }
+
+        int GetSkillCastTime()
+        {
+            if (Base.CastTimeAttributeIndex < Base.GetSkillAttributes.Length)
+                return (int)(GetSkillAttributeValue(Base.CastTimeAttributeIndex) * 60);
+            return 0;
+        }
 
         internal void ChangeSkillIDs(uint ID, string ModID)
         {
@@ -108,6 +130,14 @@ namespace terraclasses1dot4
                 EndUse();
                 return;
             }
+            int ManaCost = GetManaCost(player);
+            if (!player.CheckMana(ManaCost, true))
+            {
+                SkillBase.ChangeSkillData(null);
+                return;
+            }
+            if (ManaCost > 0)
+                player.manaRegenDelay = (int)player.maxRegenDelay;
             Time = StepStartTime = int.MinValue;
             Step = 0;
             NpcDamageCooldown.Clear();
@@ -117,7 +147,9 @@ namespace terraclasses1dot4
             Base.OnStartUse();
             SkillBase.ChangeSkillData(null);
             Active = true;
-            player.chatOverhead.NewMessage(Base.Name + "!!!", 150);
+            CastTime = 0;
+            MaxCastTime = GetSkillCastTime();
+            //player.chatOverhead.NewMessage(Base.Name + "!!!", 150);
         }
 
         public void EndUse(bool DoCooldown = true)
@@ -128,7 +160,27 @@ namespace terraclasses1dot4
             Base.OnEndUse(false);
             SkillBase.ChangeSkillData(null);
             Active = false;
-            Cooldown = Base.Cooldown;
+            Cooldown = GetSkillCooldown();
+        }
+
+        public void UpdateSkill(Player player)
+        {
+            if (Active)
+            {
+                SkillBase.ChangeSkillData(this);
+                if (CastTime < MaxCastTime)
+                {
+                    CastTime++;
+                    player.GetModPlayer<PlayerMod>().SetCastTime(CastTime, MaxCastTime);
+                }
+                else
+                {
+                    Base.Update();
+                    Time++;
+                    UpdateCooldowns();
+                }
+                SkillBase.ChangeSkillData(null);
+            }
         }
 
         internal void UpdatePassiveSkill(Player player)
@@ -262,18 +314,6 @@ namespace terraclasses1dot4
             SkillBase.ChangeSkillData(this);
             Base.DrawInFrontOfEverything();
             SkillBase.ChangeSkillData(null);
-        }
-
-        public void UpdateSkill(Player player)
-        {
-            if (Active)
-            {
-                SkillBase.ChangeSkillData(this);
-                Base.Update();
-                Time++;
-                UpdateCooldowns();
-                SkillBase.ChangeSkillData(null);
-            }
         }
 
         public void UpdateSkillCooldown()

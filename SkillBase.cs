@@ -20,7 +20,9 @@ namespace terraclasses1dot4
         public SkillAttribute[] GetSkillAttributes => _Attributes;
         public virtual SkillData GetSkillData => new SkillData();
         public virtual bool EffectiveAtLevel0 => false;
-        public virtual int Cooldown => 0;
+        public virtual byte CooldownAttributeIndex => 255;
+        public virtual byte ManaCostAttributeIndex => 255;
+        public virtual byte CastTimeAttributeIndex => 255;
         bool _Invalid;
         public bool IsInvalid => _Invalid;
 
@@ -151,9 +153,33 @@ namespace terraclasses1dot4
         #endregion
 
         #region Handy Methods
+        public byte GetStep => _Data.GetStep;
+
+        public bool IsStepStart => _Data.StepStart;
+
         public int GetTime => _Data.GetTime;
 
         public int GetTotalTime => _Data.GetTotalTime;
+
+        public void ChangeStep()
+        {
+            _Data.ChangeStep();
+        }
+
+        public void ChangeCastBar(float Percentage)
+        {
+            GetCaster.GetModPlayer<PlayerMod>().CastBarPercentage = Percentage;
+        }
+
+        public void ChangeCastBar(float CastProgress, float MaxProgress)
+        {
+            GetCaster.GetModPlayer<PlayerMod>().SetCastTime(CastProgress, MaxProgress);
+        }
+
+        public void ChangeStep(byte NewStep)
+        {
+            _Data.ChangeStep(NewStep);
+        }
 
         public int GetFrameFromTime(int Seconds, int Minutes = 0, int Hours = 0)
         {
@@ -179,6 +205,13 @@ namespace terraclasses1dot4
         {
             return TextureAssets.Gore[ID].Value;
         }
+
+        public Vector2 GetAimedVelocity(Vector2 FiringPosition, Vector2 TargetPosition)
+        {
+            return (TargetPosition - FiringPosition).SafeNormalize(-Vector2.UnitY);
+        }
+
+        public Vector2 GetMousePosition => new Vector2(Main.screenPosition.X + Main.mouseX, Main.screenPosition.Y + Main.mouseY);
 
         public int GetBestDamage(Player player, DamageClass damageClass, float DamagePercentage = 1f)
         {

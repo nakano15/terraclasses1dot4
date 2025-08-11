@@ -18,9 +18,12 @@ namespace terraclasses1dot4.Skills.Terrarian
         protected override SkillAttribute[] SetSkillAttributes => new SkillAttribute[]
         {
             new HealingPower(),
-            new DebuffRemoval()
+            new DebuffRemoval(),
+            new ManaCost(),
+            new Cooldown()
         };
-        public override int Cooldown => GetFrameFromTime(30);
+        public override byte ManaCostAttributeIndex => 2;
+        public override byte CooldownAttributeIndex => 3;
 
         public override void Update()
         {
@@ -77,6 +80,34 @@ namespace terraclasses1dot4.Skills.Terrarian
             public override float Value(int Level)
             {
                 return Level;
+            }
+        }
+
+        public class ManaCost : SkillAttribute
+        {
+            public override string Name => "Mana Cost";
+            public override string AttributeDescription(int Level)
+            {
+                return "Costs " + Value(Level) + " Mana to use.";
+            }
+            public override int MaxLevel => 0;
+            public override float Value(int Level)
+            {
+                return 3;
+            }
+        }
+
+        class Cooldown : SkillAttribute
+        {
+            public override string Name => "Cooldown";
+            public override string AttributeDescription(int Level)
+            {
+                return "Reusable after " + Value(Level) + " seconds.";
+            }
+            public override int MaxLevel => 0;
+            public override float Value(int Level)
+            {
+                return .5f;
             }
         }
     }
